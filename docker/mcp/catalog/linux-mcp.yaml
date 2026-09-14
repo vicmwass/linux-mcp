@@ -1,0 +1,118 @@
+title: Custom Linux MCP Catalog
+servers:
+  - type: server
+    name: linux-mcp
+    image: linux-mcp:local
+    title: Linux MCP Server
+    description: Remote Linux server administration and management via secure SSH MCP gateway.
+    volumes:
+      - C:/Users/HP/Desktop/mcp_server/linux-mcp/config:/app/config:ro
+      - C:/Users/HP/Desktop/mcp_server/linux-mcp/keys:/app/keys:ro
+      - C:/Users/HP/Desktop/mcp_server/linux-mcp/.ssh:/home/mcp/.ssh:ro
+    environment:
+      HOME: /home/mcp
+      LINUX_MCP_KNOWN_HOSTS: /home/mcp/.ssh/known_hosts
+    tools:
+      - name: list_servers
+        description: List all Linux servers configured in the MCP server.
+        arguments: []
+      - name: get_server_capabilities
+        description: Detect the operating system, distribution, package manager, init system, architecture, and available Linux commands on a server.
+        arguments:
+          - name: server_id
+            type: string
+            desc: ID of the configured Linux server.
+      - name: inspect_command
+        description: Run a diagnostic command with structured arguments as the configured SSH user.
+        arguments:
+          - name: server_id
+            type: string
+            desc: ID of the configured Linux server.
+          - name: executable
+            type: string
+            desc: Executable name or absolute path.
+          - name: args
+            type: array
+            items:
+              type: string
+            desc: Individual command arguments.
+            optional: true
+      - name: execute_command
+        description: Execute a Linux command on a configured server after capability, operation, and security-policy validation.
+        arguments:
+          - name: server_id
+            type: string
+            desc: ID of the configured Linux server.
+          - name: command
+            type: string
+            desc: Linux command to execute.
+          - name: confirm
+            type: boolean
+            desc: Explicit confirmation for high-risk operations.
+            optional: true
+      - name: list_users
+        description: List users configured on a Linux server.
+        arguments:
+          - name: server_id
+            type: string
+            desc: ID of the configured Linux server.
+      - name: get_user
+        description: Get detailed information about a user on a Linux server.
+        arguments:
+          - name: server_id
+            type: string
+            desc: ID of the configured Linux server.
+          - name: username
+            type: string
+            desc: Username to retrieve.
+      - name: create_user
+        description: Create a Linux user account on a configured server.
+        arguments:
+          - name: server_id
+            type: string
+            desc: ID of the configured Linux server.
+          - name: username
+            type: string
+            desc: Username to create.
+          - name: home
+            type: string
+            desc: Optional home directory.
+            optional: true
+          - name: shell
+            type: string
+            desc: Optional login shell, e.g. /bin/bash.
+            optional: true
+      - name: disable_user
+        description: Disable a Linux user account without deleting it.
+        arguments:
+          - name: server_id
+            type: string
+            desc: ID of the configured Linux server.
+          - name: username
+            type: string
+            desc: Username to disable.
+      - name: enable_user
+        description: Enable a previously disabled Linux user account.
+        arguments:
+          - name: server_id
+            type: string
+            desc: ID of the configured Linux server.
+          - name: username
+            type: string
+            desc: Username to enable.
+      - name: delete_user
+        description: Permanently delete a Linux user account. Requires explicit confirmation.
+        arguments:
+          - name: server_id
+            type: string
+            desc: ID of the configured Linux server.
+          - name: username
+            type: string
+            desc: Username to delete.
+          - name: confirm
+            type: boolean
+            desc: Must be true to permanently delete the account.
+          - name: remove_home
+            type: boolean
+            desc: Also remove the user's home directory.
+            optional: true

@@ -1,0 +1,14 @@
+/target
+
+# Secrets: SSH private keys and host trust stores
+/keys/
+/.ssh/
+/ssh_trust/known_hosts
+
+# Real server inventory (contains hostnames/usernames); commit servers.toml.example instead
+/config/servers.toml
+
+# Editor / OS noise
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,13 @@
+services:
+  linux-mcp:
+    build:
+      context: .
+    image: linux-mcp:local
+    stdin_open: true
+    init: true
+    environment:
+      LINUX_MCP_KNOWN_HOSTS: /home/mcp/.ssh/known_hosts
+    volumes:
+      - ./config/servers.toml:/app/config/servers.toml:ro
+      - ./keys:/app/keys:ro
+      - ./.ssh:/home/mcp/.ssh:ro
