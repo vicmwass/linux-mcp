@@ -10,4 +10,6 @@ services:
     volumes:
       - ./config/servers.toml:/app/config/servers.toml:ro
       - ./keys:/app/keys:ro
-      - ./.ssh:/home/mcp/.ssh:ro
+      - ./ssh_trust:/home/mcp/.ssh:ro
+      - ${LINUX_MCP_MINT_SUDO_FILE:-C:/Users/HP/Documents/vicmwass.txt}:/run/secrets/linux-mint-sudo:ro
+      - ${LINUX_MCP_UBUNTU_SUDO_FILE:-C:/Users/HP/Documents/vboxuser.txt}:/run/secrets/ubuntu-01-sudo:ro

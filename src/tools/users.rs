@@ -3,7 +3,7 @@ use std::time::Duration;
 use anyhow::Result;
 
 use crate::{
-    commands::ensure_non_interactive_sudo,
+
     ssh::SshManager,
 };
 
@@ -178,7 +178,7 @@ pub async fn delete_user(
         );
     }
 
-    let mut command = String::from("sudo userdel");
+    let mut command = String::from("userdel");
 
     if remove_home {
         command.push_str(" -r");
@@ -186,10 +186,10 @@ pub async fn delete_user(
 
     command.push(' ');
     command.push_str(&shell_escape(username));
-    let command = ensure_non_interactive_sudo(&command);
+
 
     let result = ssh_manager
-        .execute(server_id, &command, Duration::from_secs(30) )
+        .execute_sudo(server_id, &command, Duration::from_secs(30))
         .await?;
 
     if result.exit_code != 0 {
@@ -232,13 +232,13 @@ pub async fn enable_user(
     }
 
     let command = format!(
-        "sudo usermod -U {}",
+        "usermod -U {}",
         shell_escape(username)
     );
-    let command = ensure_non_interactive_sudo(&command);
+
 
     let result = ssh_manager
-        .execute(server_id, &command, Duration::from_secs(30))
+        .execute_sudo(server_id, &command, Duration::from_secs(30))
         .await?;
 
     if result.exit_code != 0 {
@@ -272,7 +272,7 @@ pub async fn create_user(
         validate_shell(shell)?;
     }
 
-    let mut command = String::from("sudo useradd");
+    let mut command = String::from("useradd");
 
     if let Some(home) = home {
         command.push_str(&format!(" -d {}", shell_escape(home)));
@@ -283,10 +283,10 @@ pub async fn create_user(
     }
 
     command.push_str(&format!(" {}", shell_escape(username)));
-    let command = ensure_non_interactive_sudo(&command);
+
 
     let result = ssh_manager
-        .execute(server_id, &command, Duration::from_secs(30))
+        .execute_sudo(server_id, &command, Duration::from_secs(30))
         .await?;
 
     if result.exit_code != 0 {
@@ -322,13 +322,13 @@ pub async fn disable_user(
     }
 
     let command = format!(
-        "sudo usermod -L {}",
+        "usermod -L {}",
         shell_escape(username)
     );
-    let command = ensure_non_interactive_sudo(&command);
+
 
     let result = ssh_manager
-        .execute(server_id, &command, Duration::from_secs(30)   )
+        .execute_sudo(server_id, &command, Duration::from_secs(30))
         .await?;
 
     if result.exit_code != 0 {

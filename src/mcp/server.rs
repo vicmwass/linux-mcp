@@ -7,7 +7,6 @@ use crate::tools::{system, users};
 use rmcp::{
     ServerHandler, handler::server::wrapper::Parameters, schemars, tool, tool_handler, tool_router,
 };
-use tokio::sync::Mutex;
 
 use crate::{security::SecurityPolicy, ssh::SshManager};
 
@@ -22,17 +21,6 @@ pub struct ExecuteCommandParams {
     /// Explicit confirmation for high-risk operations.
     #[serde(default)]
     pub confirm: bool,
-}
-
-#[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
-pub struct InspectCommandParams {
-    /// ID of the configured Linux server.
-    pub server_id: String,
-    /// Executable name or absolute path. Shell syntax is not accepted.
-    pub executable: String,
-    /// Positional arguments passed as individual argv entries.
-    #[serde(default)]
-    pub args: Vec<String>,
 }
 
 #[derive(Clone)]
@@ -181,15 +169,17 @@ impl LinuxMcpServer {
         }
 
         // 5. Execute only after all validation succeeds.
-        let plan = crate::execution::ExecutionPlan::command(
-            params.server_id.clone(),
-            resolved.command.clone(),
-            analysis,
-            params.confirm,
-        );
-        let engine = crate::execution::ExecutionEngine::new(&self.ssh_manager);
+        // The shared sudo handler adds sudo itself; pass only the target command.
+        let command = resolved
+            .command
+            .strip_prefix("sudo ")
+            .unwrap_or(&resolved.command);
+        let engine = ExecutionEngine::new(&self.ssh_manager);
 
-        match engine.execute(&plan).await {
+        match engine
+            .execute_structured(&params.server_id, command, &analysis, is_root)
+            .await
+        {
             Ok(result) => {
                 format!(
                     "Exit code: {}\n\
@@ -202,34 +192,6 @@ impl LinuxMcpServer {
             Err(error) => {
                 format!("Command execution failed:\n{error:#}")
             }
-        }
-    }
-
-    #[tool(
-        name = "inspect_command",
-        description = "Run a read-only diagnostic command with structured arguments as the configured SSH user. No shell syntax, sudo, or command chaining is permitted."
-    )]
-    async fn inspect_command(
-        &self,
-        Parameters(params): Parameters<InspectCommandParams>,
-    ) -> String {
-        if let Err(error) = validate_inspection_input(&params.executable, &params.args) {
-            return format!("Inspection rejected:\n{error:#}");
-        }
-
-        let command = std::iter::once(params.executable.as_str())
-            .chain(params.args.iter().map(String::as_str))
-            .map(shell_quote)
-            .collect::<Vec<_>>()
-            .join(" ");
-
-        let engine = crate::execution::ExecutionEngine::new(&self.ssh_manager);
-        match engine.execute_inspection(&params.server_id, &command).await {
-            Ok(result) => format!(
-                "Exit code: {}\nSTDOUT:\n{}\nSTDERR:\n{}",
-                result.exit_code, result.stdout, result.stderr
-            ),
-            Err(error) => format!("Inspection failed:\n{error:#}"),
         }
     }
     #[tool(
@@ -384,27 +346,6 @@ impl LinuxMcpServer {
             }
         }
     }
-}
-
-fn validate_inspection_input(executable: &str, args: &[String]) -> anyhow::Result<()> {
-    anyhow::ensure!(!executable.is_empty(), "Executable cannot be empty");
-    anyhow::ensure!(executable.len() <= 256, "Executable is too long");
-    anyhow::ensure!(
-        executable.chars().all(|c| c.is_ascii_alphanumeric() || matches!(c, '_' | '-' | '.' | '/')),
-        "Executable contains invalid characters"
-    );
-    anyhow::ensure!(!executable.contains(".."), "Path traversal is not permitted");
-    anyhow::ensure!(executable != "sudo" && executable != "sh" && executable != "bash" && executable != "dash" && executable != "zsh", "Shell and sudo executables are not permitted");
-    anyhow::ensure!(args.len() <= 32, "Too many arguments");
-    for arg in args {
-        anyhow::ensure!(arg.len() <= 4096, "Argument is too long");
-        anyhow::ensure!(!arg.contains('\0') && !arg.contains('\n') && !arg.contains('\r'), "Arguments cannot contain NUL or newlines");
-    }
-    Ok(())
-}
-
-fn shell_quote(value: &str) -> String {
-    format!("'{}'", value.replace('\'', "'\\''"))
 }
 
 #[tool_handler]

@@ -8,7 +8,12 @@
 # Real server inventory (contains hostnames/usernames); commit servers.toml.example instead
 /config/servers.toml
 
+
+# Local architecture explanation
+/linux-mcp-architecture-explanation.md
+
 # Editor / OS noise
 .vscode/
 .DS_Store
 Thumbs.db
+__pycache__/

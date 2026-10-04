@@ -10,6 +10,8 @@ pub struct ServerConfig {
     pub username: String,
     pub private_key: String,
     pub environment: String,
+    /// Optional path inside the MCP container to a read-only sudo password secret.
+    pub sudo_password_file: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]

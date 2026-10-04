@@ -8,7 +8,9 @@ servers:
     volumes:
       - C:/Users/HP/Desktop/mcp_server/linux-mcp/config:/app/config:ro
       - C:/Users/HP/Desktop/mcp_server/linux-mcp/keys:/app/keys:ro
-      - C:/Users/HP/Desktop/mcp_server/linux-mcp/.ssh:/home/mcp/.ssh:ro
+      - C:/Users/HP/Desktop/mcp_server/linux-mcp/ssh_trust:/home/mcp/.ssh:ro
+      - C:/Users/HP/Documents/vicmwass.txt:/run/secrets/linux-mint-sudo:ro
+      - C:/Users/HP/Documents/vboxuser.txt:/run/secrets/ubuntu-01-sudo:ro
     environment:
       HOME: /home/mcp
       LINUX_MCP_KNOWN_HOSTS: /home/mcp/.ssh/known_hosts
@@ -22,8 +24,8 @@ servers:
           - name: server_id
             type: string
             desc: ID of the configured Linux server.
-      - name: inspect_command
-        description: Run a diagnostic command with structured arguments as the configured SSH user.
+      - name: execute_command
+        description: Execute a structured command as the configured SSH user, optionally using sudo after confirmation.
         arguments:
           - name: server_id
             type: string
@@ -37,15 +39,10 @@ servers:
               type: string
             desc: Individual command arguments.
             optional: true
-      - name: execute_command
-        description: Execute a Linux command on a configured server after capability, operation, and security-policy validation.
-        arguments:
-          - name: server_id
+          - name: privilege
             type: string
-            desc: ID of the configured Linux server.
-          - name: command
-            type: string
-            desc: Linux command to execute.
+            desc: user or sudo; sudo requires confirmation.
+            optional: true
           - name: confirm
             type: boolean
             desc: Explicit confirmation for high-risk operations.

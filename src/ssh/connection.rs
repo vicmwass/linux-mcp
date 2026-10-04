@@ -1,12 +1,7 @@
 use anyhow::{Context, Result};
 use russh::{
     client,
-    keys::{
-        load_secret_key,
-        key::{PrivateKeyWithHashAlg},
-        PublicKeyOrCertificate,
-        PublicKey,
-    },
+    keys::{PublicKey, PublicKeyOrCertificate, key::PrivateKeyWithHashAlg, load_secret_key},
 };
 use std::{
     path::{Path, PathBuf},
@@ -54,7 +49,10 @@ impl client::Handler for ClientHandler {
             .unwrap_or_else(|| Path::new(&home).join(".ssh/known_hosts"));
 
         if !known_hosts_path.exists() {
-            eprintln!("Warning: known_hosts file not found at {:?}", known_hosts_path);
+            eprintln!(
+                "Warning: known_hosts file not found at {:?}",
+                known_hosts_path
+            );
             return Ok(false);
         }
 
@@ -65,7 +63,7 @@ impl client::Handler for ClientHandler {
             &key,
             &known_hosts_path,
         )
-           .map_err(|_| russh::Error::UnknownKey)?;
+        .map_err(|_| russh::Error::UnknownKey)?;
 
         Ok(is_valid)
     }
@@ -75,12 +73,19 @@ pub struct SshConnection {
     session: client::Handle<ClientHandler>,
 }
 
+/// A failure before any command was submitted; only this error is safe to retry.
+#[derive(Debug, thiserror::Error)]
+#[error("Failed to open SSH session channel: {0}")]
+pub struct ChannelOpenError(#[source] pub russh::Error);
+
 impl SshConnection {
+    pub fn is_closed(&self) -> bool {
+        self.session.is_closed()
+    }
     pub async fn connect(server: &ServerConfig, username: &str) -> Result<Self> {
         let private_key_path = resolve_project_path(&server.private_key)?;
 
-        let key = load_secret_key(&private_key_path, None)
-        .with_context(|| {
+        let key = load_secret_key(&private_key_path, None).with_context(|| {
             format!(
                 "Failed to load SSH private key: {}",
                 private_key_path.display()
@@ -100,13 +105,7 @@ impl SshConnection {
             handler,
         )
         .await
-        .with_context(|| {
-            format!(
-                "Failed to connect to {}:{}",
-                server.hostname,
-                server.port
-            )
-        })?;
+        .with_context(|| format!("Failed to connect to {}:{}", server.hostname, server.port))?;
 
         let auth_result = session
             .authenticate_publickey(
@@ -124,30 +123,41 @@ impl SshConnection {
             .context("SSH public-key authentication failed")?;
 
         if !auth_result.success() {
-            anyhow::bail!(
-                "SSH authentication failed for user '{}'",
-                username
-            );
+            anyhow::bail!("SSH authentication failed for user '{}'", username);
         }
 
         Ok(Self { session })
     }
 
     pub async fn execute(&mut self, command: &str) -> Result<CommandResult> {
+        self.execute_with_stdin(command, &[]).await
+    }
+
+    pub async fn execute_with_stdin(
+        &mut self,
+        command: &str,
+        stdin: &[u8],
+    ) -> Result<CommandResult> {
         let channel = self
             .session
             .channel_open_session()
             .await
-            .context("Failed to open SSH session channel")?;
+            .map_err(ChannelOpenError)?;
 
         let mut channel = channel;
 
         channel
             .exec(true, command)
             .await
-            .with_context(|| {
-                format!("Failed to execute command: {command}")
-            })?;
+            .with_context(|| format!("Failed to execute command: {command}"))?;
+
+        if !stdin.is_empty() {
+            channel
+                .data(stdin)
+                .await
+                .context("Failed to send SSH stdin")?;
+        }
+        channel.eof().await.context("Failed to close SSH stdin")?;
 
         let mut stdout = Vec::new();
         let mut stderr = Vec::new();

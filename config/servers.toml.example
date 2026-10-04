@@ -5,6 +5,8 @@ port = 22
 username = "changeme"
 private_key = "./keys/your-key"
 environment = "development"
+# Optional read-only container secret used by all sudo execution paths.
+# sudo_password_file = "/run/secrets/example-server-sudo"
 
 # [[servers]]
 # id = "another-server"
