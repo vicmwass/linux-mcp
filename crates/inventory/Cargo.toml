@@ -7,12 +7,15 @@ license = "MIT"
 publish = false
 
 [dependencies]
+aes-gcm = "0.10"
 chrono = { version = "0.4.45", default-features = false, features = ["serde", "std"] }
 linux-mcp-contracts = { path = "../contracts", default-features = false, features = ["public", "backend"] }
+rand = "0.8"
 serde = { version = "1", features = ["derive"] }
 sqlx = { version = "0.8", default-features = false, features = ["chrono", "macros", "migrate", "postgres", "runtime-tokio-rustls", "uuid"] }
 thiserror = "2"
 uuid = { version = "1.26", features = ["serde"] }
+zeroize = "1.9"
 
 [dev-dependencies]
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }

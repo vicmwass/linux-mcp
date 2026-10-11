@@ -1,0 +1,12 @@
+{
+  "plan_id": "dev-spec-status",
+  "version": 1,
+  "steps": [
+    {
+      "id": "viewer-01",
+      "title": "Implement and verify read-only local spec status viewer",
+      "depends_on": [],
+      "resources": ["dev-spec-status"]
+    }
+  ]
+}

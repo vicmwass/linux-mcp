@@ -17,4 +17,4 @@ toml = "1.1.0"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 [workspace]
-members = [".", "crates/contracts", "crates/inventory"]
+members = [".", "crates/contracts", "crates/inventory", "crates/identity"]
