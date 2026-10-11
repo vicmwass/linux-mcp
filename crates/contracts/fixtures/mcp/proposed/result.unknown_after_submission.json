@@ -1,0 +1,16 @@
+{
+  "schema_version": "linux-mcp/v1",
+  "request_id": "0b1c2d3e-4f50-4617-8899-aabbccddeeff",
+  "result": {
+    "kind": "outcome",
+    "operation_id": "0e000000-0000-4000-8000-000000000001",
+    "server_id": "3f2b8c1e-5d4a-4b6e-9f10-2a3b4c5d6e7f",
+    "submission": "submitted",
+    "outcome": {
+      "status": "unknown_after_submission",
+      "cause": "disconnected",
+      "partial_stdout": null,
+      "partial_stderr": null
+    }
+  }
+}

@@ -1,0 +1,758 @@
+[
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Component reference",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Processes",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Packages",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Files",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Storage · read-only",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Network",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Scheduled jobs",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Access",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Server overview",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Capabilities",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Users",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Services",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Logs",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Review exact action",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Operation result",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Owned audit history",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Sign in",
+    "viewport": 1440,
+    "width": 1440
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Your servers",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Add or edit server",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Verify host identity",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Agent connection",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Monitoring",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Collection schedules",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Alert inbox",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Troubleshooting evidence",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Fleet comparison",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Maintenance workflow",
+    "viewport": 1440,
+    "width": 1425
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Component reference",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Processes",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Packages",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Files",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Storage · read-only",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Network",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Scheduled jobs",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Access",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Server overview",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Capabilities",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Users",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Services",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Logs",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Review exact action",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Operation result",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Owned audit history",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Sign in",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Your servers",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Add or edit server",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Verify host identity",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Agent connection",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Monitoring",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Collection schedules",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Alert inbox",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Troubleshooting evidence",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Fleet comparison",
+    "viewport": 834,
+    "width": 834
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Maintenance workflow",
+    "viewport": 834,
+    "width": 819
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Component reference",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Processes",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Packages",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Files",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Storage · read-only",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Network",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Scheduled jobs",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Access",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Server overview",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Capabilities",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Users",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Services",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Logs",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Review exact action",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Operation result",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Owned audit history",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Sign in",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Your servers",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Add or edit server",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Verify host identity",
+    "viewport": 390,
+    "width": 379
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Agent connection",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Monitoring",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Collection schedules",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Alert inbox",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Troubleshooting evidence",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Fleet comparison",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Maintenance workflow",
+    "viewport": 390,
+    "width": 375
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Component reference",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Processes",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Packages",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Files",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Storage · read-only",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Network",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Scheduled jobs",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Access",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Sign in",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Your servers",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Add or edit server",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Verify host identity",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Agent connection",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Server overview",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Capabilities",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Users",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Services",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Logs",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Review exact action",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Operation result",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Owned audit history",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Monitoring",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Collection schedules",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Alert inbox",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Troubleshooting evidence",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Fleet comparison",
+    "viewport": 320,
+    "width": 305
+  },
+  {
+    "headingCount": 1,
+    "overflow": false,
+    "screen": "Maintenance workflow",
+    "viewport": 320,
+    "width": 305
+  }
+]

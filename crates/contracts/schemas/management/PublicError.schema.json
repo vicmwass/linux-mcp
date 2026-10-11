@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PublicError",
+  "description": "Public error envelope used by the management API and MCP structured results.",
+  "type": "object",
+  "properties": {
+    "code": {
+      "$ref": "#/$defs/ErrorCode"
+    },
+    "details": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ErrorDetails"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "message": {
+      "type": "string"
+    },
+    "request_id": {
+      "$ref": "#/$defs/RequestId"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "code",
+    "message",
+    "request_id"
+  ],
+  "$defs": {
+    "ApprovalErrorReason": {
+      "description": "Approval states visible to callers in an `approval_required` error.",
+      "oneOf": [
+        {
+          "description": "No approval exists for this exact intent.",
+          "type": "string",
+          "const": "missing"
+        },
+        {
+          "description": "An approval exists but is still waiting for a human decision.",
+          "type": "string",
+          "const": "pending"
+        },
+        {
+          "description": "The approval expired.",
+          "type": "string",
+          "const": "expired"
+        },
+        {
+          "description": "The approval was already consumed by a previous dispatch.",
+          "type": "string",
+          "const": "consumed"
+        },
+        {
+          "description": "The approval was rejected by the human approver.",
+          "type": "string",
+          "const": "rejected"
+        },
+        {
+          "description": "Arguments, target revision, identity or schema version no longer match the binding.",
+          "type": "string",
+          "const": "binding_mismatch"
+        }
+      ]
+    },
+    "ApprovalId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ErrorCode": {
+      "description": "Closed set of public error codes (snake_case on the wire).",
+      "type": "string",
+      "enum": [
+        "unauthenticated",
+        "forbidden",
+        "not_found",
+        "validation",
+        "revision_conflict",
+        "approval_required",
+        "unavailable",
+        "timeout",
+        "outcome_unknown"
+      ]
+    },
+    "ErrorDetails": {
+      "description": "Closed set of structured error details.",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "field_violations"
+            },
+            "violations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/FieldViolation"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "violations"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "current_revision": {
+              "$ref": "#/$defs/ServerRevision"
+            },
+            "kind": {
+              "type": "string",
+              "const": "revision_conflict"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "current_revision"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "approval_id": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/ApprovalId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "kind": {
+              "type": "string",
+              "const": "approval_required"
+            },
+            "reason": {
+              "$ref": "#/$defs/ApprovalErrorReason"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "reason"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "retry_after"
+            },
+            "retry_after_ms": {
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "retry_after_ms"
+          ]
+        }
+      ]
+    },
+    "FieldPath": {
+      "type": "string",
+      "pattern": "^[a-z0-9_.\\[\\]]{1,128}$"
+    },
+    "FieldViolation": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "$ref": "#/$defs/FieldPath"
+        },
+        "rule": {
+          "$ref": "#/$defs/ViolationRule"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "field",
+        "rule"
+      ]
+    },
+    "RequestId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ServerRevision": {
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": 1
+    },
+    "ViolationRule": {
+      "description": "Validation rule that a value violated. Values themselves are never echoed back.",
+      "type": "string",
+      "enum": [
+        "required",
+        "too_short",
+        "too_long",
+        "invalid_format",
+        "out_of_range",
+        "unknown_field",
+        "not_allowed",
+        "no_changes"
+      ]
+    }
+  }
+}

@@ -1,0 +1,219 @@
+[
+  {
+    "id": "monitoring",
+    "title": "Monitoring",
+    "description": "Metric history with explicit units, sample times and missing-data gaps.",
+    "readOnly": true,
+    "metrics": [
+      [
+        "CPU",
+        "24 %"
+      ],
+      [
+        "Memory",
+        "3.2 / 8 GiB"
+      ],
+      [
+        "Disk",
+        "28 / 80 GiB"
+      ]
+    ],
+    "columns": [
+      "Sample time UTC",
+      "CPU %",
+      "State"
+    ],
+    "rows": [
+      [
+        "08:00",
+        "18",
+        "Observed"
+      ],
+      [
+        "08:06",
+        "24",
+        "Observed"
+      ],
+      [
+        "08:12–08:18",
+        "Unavailable",
+        "No samples · gap"
+      ],
+      [
+        "08:24",
+        "34",
+        "Observed"
+      ],
+      [
+        "08:30",
+        "24",
+        "Observed"
+      ]
+    ],
+    "notes": [
+      "History includes owner/server revision, units, interval/window and timezone. Numeric time series, not arbitrary raw output.",
+      "Missing data is a chart gap, not zero. Counter resets marked at source; stale/delayed samples retain actual observation time.",
+      "Range and sampling frequency are bounded; querying deleted/historical revisions labels their original identity. Table is chart alternative."
+    ]
+  },
+  {
+    "id": "schedules",
+    "title": "Collection schedules",
+    "description": "Bounded read-only collection with explicitly delegated user authority.",
+    "readOnly": true,
+    "columns": [
+      "Target / interval",
+      "Grant / expiry",
+      "Collection state"
+    ],
+    "rows": [
+      [
+        "prod-web-01 / 60s",
+        "Read-only · expires 2026-10-12 08:00 UTC",
+        "Enabled · next 08:31 UTC"
+      ],
+      [
+        "staging-api-02 / 60s",
+        "Revoked",
+        "Stopped · no new collection"
+      ]
+    ],
+    "notes": [
+      "Grant expiry/revocation, ownership changes or deletion stops new collection. UI does not imply an unrestricted global service credential.",
+      "Production scheduler uses lease/deduplication and quotas; no catch-up storm or promise every missing sample can be recovered.",
+      "Configuration form must validate frequency/retention budgets and explicit target/revision; sample limits here are provisional."
+    ]
+  },
+  {
+    "id": "alerts",
+    "title": "Alert inbox",
+    "description": "Owner-scoped alerts for sustained breaches, recovery and unavailable data.",
+    "readOnly": true,
+    "columns": [
+      "Rule / target",
+      "State",
+      "Window / observed"
+    ],
+    "rows": [
+      [
+        "CPU >80% · prod-web-01",
+        "Sustained breach",
+        "5 minutes / 08:25 UTC"
+      ],
+      [
+        "CPU collection · staging-api-02",
+        "Unavailable data",
+        "Grant revoked / 08:20 UTC"
+      ],
+      [
+        "Memory >90% · dev-db-03",
+        "Recovered",
+        "5 minutes / 08:30 UTC"
+      ]
+    ],
+    "notes": [
+      "Rule form: owner target, metric/unit, comparison/threshold, window and in-dashboard delivery; validate missing-data handling separately.",
+      "Deduplicate sustained alerts; recovery is distinct from missing data and flapping. No external notification provider is required.",
+      "Empty inbox is not proof targets are healthy; collection/grant state remains visible."
+    ]
+  },
+  {
+    "id": "troubleshoot",
+    "title": "Troubleshooting evidence",
+    "description": "Read-only bounded investigation before any proposed change.",
+    "readOnly": true,
+    "columns": [
+      "Evidence step",
+      "Observation",
+      "Collected"
+    ],
+    "rows": [
+      [
+        "Service state",
+        "nginx failed",
+        "08:30 UTC"
+      ],
+      [
+        "Recent logs",
+        "Config test error · truncated",
+        "08:30 UTC"
+      ],
+      [
+        "Proposed action",
+        "Review exact restart intent",
+        "Not approved"
+      ]
+    ],
+    "notes": [
+      "Deterministic workflow works without AI/WebMCP. Remote logs remain untrusted data, never instructions.",
+      "Evidence records target/revision/collection time; missing/unsupported tool leaves a visible partial investigation.",
+      "Proposed mutations open independent resolved-step preflight; a workflow label is not approval."
+    ]
+  },
+  {
+    "id": "fleet",
+    "title": "Fleet comparison",
+    "description": "Compare owned machines with bounded concurrency and honest partial results.",
+    "readOnly": true,
+    "columns": [
+      "Owned target / revision",
+      "Service result",
+      "Collected"
+    ],
+    "rows": [
+      [
+        "prod-web-01 / 7",
+        "nginx failed",
+        "08:30 UTC"
+      ],
+      [
+        "dev-db-03 / 4",
+        "nginx active",
+        "08:29 UTC"
+      ],
+      [
+        "staging-api-02 / 2",
+        "Unavailable · unverified key",
+        "No observation"
+      ]
+    ],
+    "notes": [
+      "2 of 3 returned; partial results never imply full fleet success. Per-target times and errors remain visible.",
+      "Selection contains owned machines only. Bounded concurrency and owner quotas enforced by backend.",
+      "No bulk mutation implicit in compare; each resolved target/action needs applicable authorization and approval."
+    ]
+  },
+  {
+    "id": "maintenance",
+    "title": "Maintenance workflow",
+    "description": "Saved bounded steps with per-step approvals and resumable evidence.",
+    "columns": [
+      "Step",
+      "State",
+      "Evidence / authorization"
+    ],
+    "rows": [
+      [
+        "1 · inspect nginx",
+        "Complete",
+        "Failed · 08:30 UTC"
+      ],
+      [
+        "2 · restart nginx.service",
+        "Awaiting exact human approval",
+        "prod-web-01 r7 · expiry 2m"
+      ],
+      [
+        "3 · verify service",
+        "Pending",
+        "Cannot run before step 2 result"
+      ]
+    ],
+    "notes": [
+      "Workflow definition has explicit targets, parameters, privileges, checks and stop conditions. Review action button demonstrates step 2 only.",
+      "After restart, persisted unknown steps reconcile by inspection before continuation; never replay submitted mutations automatically.",
+      "Revocation or target revision change blocks subsequent steps. No generic rollback or remote-cancel guarantee.",
+      "Optional assistant/browser-agent slots may be added later; ordinary workflow is complete without provider credentials."
+    ]
+  }
+]

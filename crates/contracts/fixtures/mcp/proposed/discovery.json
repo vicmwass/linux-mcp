@@ -1,0 +1,10 @@
+{
+  "schema_version": "linux-mcp/v1",
+  "tools": [
+    "prepare_operation",
+    "submit_operation",
+    "get_operation_status"
+  ],
+  "approval_flow": true,
+  "structured_results": true
+}

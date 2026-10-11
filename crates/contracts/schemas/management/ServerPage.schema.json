@@ -1,0 +1,266 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Page",
+  "description": "One page of results. `next_cursor` is `null` on the last page.",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ServerSummary"
+      }
+    },
+    "next_cursor": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PageCursor"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "items"
+  ],
+  "$defs": {
+    "ApprovalMode": {
+      "description": "Per-server rule for which operations need human approval (decisions.md D11).\n\nSet with the server configuration. `MediumAndAbove` is the default and the recommended\nsetting. Neither mode can bypass a policy denial, and `confirm: true` is never approval.\nBecause lowering the threshold weakens a safeguard, changing this setting away from the\ndefault requires an interactive browser session (not an MCP or delegated token), so an\nagent cannot disable approvals for itself. Any change bumps the server revision, which\ninvalidates pending approvals bound to the old setting.",
+      "oneOf": [
+        {
+          "description": "Medium, high and critical-risk mutations need approval (critical is always denied).",
+          "type": "string",
+          "const": "medium_and_above"
+        },
+        {
+          "description": "Only high-risk mutations need approval; medium-risk operations (for example creating a\nuser, restarting a service, installing a package) run without it.",
+          "type": "string",
+          "const": "high_and_above"
+        }
+      ]
+    },
+    "CredentialId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "CredentialKind": {
+      "type": "string",
+      "enum": [
+        "ssh_private_key",
+        "sudo_password"
+      ]
+    },
+    "CredentialState": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "missing",
+            "provisioned"
+          ]
+        },
+        {
+          "description": "Sudo without a password (`sudo -n`) is configured; no secret is stored.",
+          "type": "string",
+          "const": "not_required"
+        }
+      ]
+    },
+    "CredentialStatus": {
+      "description": "Status and reference of one credential slot. Never includes secret material.",
+      "type": "object",
+      "properties": {
+        "credential_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CredentialId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "kind": {
+          "$ref": "#/$defs/CredentialKind"
+        },
+        "state": {
+          "$ref": "#/$defs/CredentialState"
+        },
+        "updated_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "state"
+      ]
+    },
+    "DisplayName": {
+      "type": "string",
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "Environment": {
+      "type": "string",
+      "enum": [
+        "development",
+        "testing",
+        "staging",
+        "production"
+      ]
+    },
+    "HostTrustStatus": {
+      "description": "Host-key trust state for a server's (hostname, port).\n\n`Observed` is never trust: it only means a fingerprint is waiting for independent\nverification. Only `Verified` permits connections; `Mismatch` blocks until reverified.",
+      "type": "string",
+      "enum": [
+        "unenrolled",
+        "observed",
+        "verified",
+        "mismatch"
+      ]
+    },
+    "HostTrustSummary": {
+      "description": "Public host-trust summary. Fingerprints are public key digests, not secrets.",
+      "type": "object",
+      "properties": {
+        "fingerprint": {
+          "description": "`SHA256:<base64>` OpenSSH-style fingerprint of the verified or observed key.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/HostTrustStatus"
+        },
+        "verified_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "status"
+      ]
+    },
+    "Hostname": {
+      "type": "string",
+      "maxLength": 253,
+      "minLength": 1
+    },
+    "PageCursor": {
+      "type": "string",
+      "maxLength": 512,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "ServerId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ServerRevision": {
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": 1
+    },
+    "ServerSummary": {
+      "description": "Owned server as returned to its owner (spec 00 `ServerSummary`).",
+      "type": "object",
+      "properties": {
+        "approval_mode": {
+          "$ref": "#/$defs/ApprovalMode"
+        },
+        "created_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "credentials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CredentialStatus"
+          }
+        },
+        "display_name": {
+          "$ref": "#/$defs/DisplayName"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "environment": {
+          "$ref": "#/$defs/Environment"
+        },
+        "host_trust": {
+          "$ref": "#/$defs/HostTrustSummary"
+        },
+        "hostname": {
+          "$ref": "#/$defs/Hostname"
+        },
+        "id": {
+          "$ref": "#/$defs/ServerId"
+        },
+        "port": {
+          "$ref": "#/$defs/SshPort"
+        },
+        "revision": {
+          "$ref": "#/$defs/ServerRevision"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "username": {
+          "$ref": "#/$defs/SshUsername"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "display_name",
+        "hostname",
+        "port",
+        "username",
+        "environment",
+        "revision",
+        "enabled",
+        "approval_mode",
+        "host_trust",
+        "credentials",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "SshPort": {
+      "type": "integer",
+      "default": 22,
+      "maximum": 65535,
+      "minimum": 1
+    },
+    "SshUsername": {
+      "type": "string",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[a-z_][a-z0-9_-]*$"
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    }
+  }
+}

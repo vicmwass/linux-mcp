@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OperationStatusParams",
+  "description": "`get_operation_status` input.",
+  "type": "object",
+  "properties": {
+    "operation_id": {
+      "$ref": "#/$defs/OperationId"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "operation_id"
+  ],
+  "$defs": {
+    "OperationId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    }
+  }
+}

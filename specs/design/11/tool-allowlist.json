@@ -1,0 +1,123 @@
+{
+  "schema_version": "linux-mcp/workflow-tool-allowlist/v1",
+  "status": "provisional",
+  "note": "Tool IDs and argument names for specs 08-10 are provisional until their contract extensions are frozen; a template referencing a tool that is not listed here and registered by the MCP service is rejected. A tool name discovered at runtime is not evidence of a compatible schema. execute_command and any raw-shell tool are never allowed.",
+  "denied_tools": [
+    "execute_command"
+  ],
+  "tools": [
+    {
+      "id": "get_health_overview",
+      "schema_version": 1,
+      "mutating": false,
+      "source_spec": "08",
+      "args": {}
+    },
+    {
+      "id": "list_services",
+      "schema_version": 1,
+      "mutating": false,
+      "source_spec": "08",
+      "args": {}
+    },
+    {
+      "id": "get_service",
+      "schema_version": 1,
+      "mutating": false,
+      "source_spec": "08",
+      "args": {
+        "service": {
+          "required": true,
+          "observable_validator": "service_unit"
+        }
+      }
+    },
+    {
+      "id": "query_logs",
+      "schema_version": 1,
+      "mutating": false,
+      "source_spec": "08",
+      "args": {
+        "service": {
+          "required": true,
+          "observable_validator": "service_unit"
+        },
+        "since_minutes": {
+          "required": false
+        },
+        "max_entries": {
+          "required": false
+        }
+      }
+    },
+    {
+      "id": "query_metrics",
+      "schema_version": 1,
+      "mutating": false,
+      "source_spec": "10",
+      "args": {
+        "metric": {
+          "required": true
+        },
+        "window_minutes": {
+          "required": false
+        }
+      }
+    },
+    {
+      "id": "get_disk_usage",
+      "schema_version": 1,
+      "mutating": false,
+      "source_spec": "10",
+      "args": {}
+    },
+    {
+      "id": "get_server_capabilities",
+      "schema_version": 1,
+      "mutating": false,
+      "source_spec": "existing",
+      "args": {}
+    },
+    {
+      "id": "list_users",
+      "schema_version": 1,
+      "mutating": false,
+      "source_spec": "existing",
+      "args": {}
+    },
+    {
+      "id": "get_user",
+      "schema_version": 1,
+      "mutating": false,
+      "source_spec": "existing",
+      "args": {
+        "username": {
+          "required": true
+        }
+      }
+    },
+    {
+      "id": "service_action",
+      "schema_version": 1,
+      "mutating": true,
+      "source_spec": "08",
+      "args": {
+        "service": {
+          "required": true,
+          "observable_validator": "service_unit"
+        },
+        "action": {
+          "required": true,
+          "literal_values": [
+            "start",
+            "stop",
+            "restart"
+          ]
+        }
+      }
+    }
+  ],
+  "validators": {
+    "service_unit": "^[A-Za-z0-9_.@:-]{1,120}\\.service$|^[A-Za-z0-9_.@:-]{1,120}$"
+  }
+}

@@ -1,0 +1,66 @@
+name: linux-mcp-fixtures
+
+services:
+  fixture-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: linux_mcp_fixture
+      POSTGRES_USER: fixture
+      POSTGRES_PASSWORD: fixture-only-password
+    networks: [fixture-data]
+    volumes:
+      - fixture-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fixture -d linux_mcp_fixture"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+  fixture-identity:
+    image: nginx:1.27-alpine
+    networks: [fixture-app]
+    volumes:
+      - ./mock/identity.conf:/etc/nginx/conf.d/default.conf:ro
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/healthz"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+  fixture-mcp:
+    image: nginx:1.27-alpine
+    networks: [fixture-app, fixture-provider]
+    volumes:
+      - ./mock/mcp.conf:/etc/nginx/conf.d/default.conf:ro
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/healthz"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+  fixture-dashboard:
+    image: nginx:1.27-alpine
+    networks: [fixture-app]
+    volumes:
+      - ./mock/dashboard.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      fixture-identity: {condition: service_healthy}
+      fixture-mcp: {condition: service_healthy}
+    ports:
+      - "127.0.0.1:18765:80"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/healthz"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+networks:
+  fixture-app:
+    internal: true
+  fixture-data:
+    internal: true
+  fixture-provider:
+    internal: true
+
+volumes:
+  fixture-db-data:

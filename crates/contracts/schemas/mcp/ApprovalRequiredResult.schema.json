@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ApprovalRequiredResult",
+  "description": "Returned instead of executing when human approval is required.",
+  "type": "object",
+  "properties": {
+    "approval_id": {
+      "$ref": "#/$defs/ApprovalId"
+    },
+    "dashboard_path": {
+      "description": "Dashboard-relative path the owner opens to decide, e.g. `/approvals/<id>`. Never carries\ncredentials or tokens.",
+      "type": "string"
+    },
+    "expires_at": {
+      "$ref": "#/$defs/Timestamp"
+    },
+    "intent_digest": {
+      "$ref": "#/$defs/IntentDigest"
+    },
+    "status": {
+      "$ref": "#/$defs/ApprovalStatus"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "approval_id",
+    "status",
+    "intent_digest",
+    "expires_at",
+    "dashboard_path"
+  ],
+  "$defs": {
+    "ApprovalId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ApprovalStatus": {
+      "description": "Human approval state.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected",
+            "expired"
+          ]
+        },
+        {
+          "description": "Consumed by exactly one dispatch; never reset, even if the outcome is unknown.",
+          "type": "string",
+          "const": "consumed"
+        },
+        {
+          "description": "Target revision, identity or permissions changed after approval.",
+          "type": "string",
+          "const": "invalidated"
+        }
+      ]
+    },
+    "IntentDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    }
+  }
+}

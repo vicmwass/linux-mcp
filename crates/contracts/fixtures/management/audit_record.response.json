@@ -1,0 +1,19 @@
+{
+  "id": "a0000000-0000-4000-8000-000000000001",
+  "request_id": "0b1c2d3e-4f50-4617-8899-aabbccddeeff",
+  "action": "operation_outcome_unknown",
+  "operation_id": "0e000000-0000-4000-8000-000000000001",
+  "server_id": "3f2b8c1e-5d4a-4b6e-9f10-2a3b4c5d6e7f",
+  "server_revision": 5,
+  "tool": "delete_user",
+  "redacted_arguments": {
+    "username": "olduser",
+    "remove_home": true
+  },
+  "approval_id": "a9900000-0000-4000-8000-000000000001",
+  "submission": "submitted",
+  "outcome": "unknown_after_submission",
+  "refusal_reason": null,
+  "exit_code": null,
+  "recorded_at": "2026-10-11T08:05:00.000Z"
+}

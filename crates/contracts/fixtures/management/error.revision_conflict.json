@@ -1,0 +1,11 @@
+{
+  "error": {
+    "code": "revision_conflict",
+    "message": "The resource was changed by another request.",
+    "request_id": "0b1c2d3e-4f50-4617-8899-aabbccddeeff",
+    "details": {
+      "kind": "revision_conflict",
+      "current_revision": 7
+    }
+  }
+}

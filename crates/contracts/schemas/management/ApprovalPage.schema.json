@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Page",
+  "description": "One page of results. `next_cursor` is `null` on the last page.",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ApprovalSummary"
+      }
+    },
+    "next_cursor": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PageCursor"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "items"
+  ],
+  "$defs": {
+    "ApprovalId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ApprovalStatus": {
+      "description": "Human approval state.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected",
+            "expired"
+          ]
+        },
+        {
+          "description": "Consumed by exactly one dispatch; never reset, even if the outcome is unknown.",
+          "type": "string",
+          "const": "consumed"
+        },
+        {
+          "description": "Target revision, identity or permissions changed after approval.",
+          "type": "string",
+          "const": "invalidated"
+        }
+      ]
+    },
+    "ApprovalSummary": {
+      "description": "Public view of an approval, including the stored intent the human approves.",
+      "type": "object",
+      "properties": {
+        "approval_id": {
+          "$ref": "#/$defs/ApprovalId"
+        },
+        "decided_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expires_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "intent": {
+          "$ref": "#/$defs/OperationIntent"
+        },
+        "intent_digest": {
+          "$ref": "#/$defs/IntentDigest"
+        },
+        "requested_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "status": {
+          "$ref": "#/$defs/ApprovalStatus"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "approval_id",
+        "status",
+        "intent",
+        "intent_digest",
+        "requested_at",
+        "expires_at"
+      ]
+    },
+    "CanonicalArguments": {
+      "description": "Tool arguments; canonicalized with lmcp-canon-v1 (no floats, no secret-named keys).",
+      "type": "object"
+    },
+    "InstallationId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "IntentDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "OperationId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "OperationIntent": {
+      "description": "Immutable, server-created operation binding (spec 00 `OperationIntent`).",
+      "type": "object",
+      "properties": {
+        "arguments": {
+          "$ref": "#/$defs/CanonicalArguments"
+        },
+        "canonicalization": {
+          "type": "string"
+        },
+        "created_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "installation_id": {
+          "$ref": "#/$defs/InstallationId"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/OperationId"
+        },
+        "owner": {
+          "$ref": "#/$defs/UserId"
+        },
+        "risk": {
+          "$ref": "#/$defs/RiskLevel"
+        },
+        "server_id": {
+          "$ref": "#/$defs/ServerId"
+        },
+        "server_revision": {
+          "$ref": "#/$defs/ServerRevision"
+        },
+        "tool": {
+          "$ref": "#/$defs/ToolId"
+        },
+        "tool_schema_version": {
+          "$ref": "#/$defs/ToolSchemaVersion"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "canonicalization",
+        "installation_id",
+        "owner",
+        "server_id",
+        "server_revision",
+        "tool",
+        "tool_schema_version",
+        "arguments",
+        "risk",
+        "created_at",
+        "expires_at"
+      ]
+    },
+    "PageCursor": {
+      "type": "string",
+      "maxLength": 512,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "RiskLevel": {
+      "description": "Risk classification, same levels as the current command classifier.",
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "ServerId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ServerRevision": {
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": 1
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "ToolId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{0,63}$"
+    },
+    "ToolSchemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "UserId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HostKeyObservation",
+  "description": "`POST /api/v1/servers/{server_id}/host-key/observe` — no body.\n\nThe server connects only far enough to read the host key (no authentication, no command).\nThe result is **not** trusted; the user compares the fingerprint out of band.",
+  "type": "object",
+  "properties": {
+    "differs_from_verified": {
+      "description": "Whether this differs from a currently verified key (a changed key blocks connections).",
+      "type": "boolean"
+    },
+    "fingerprint": {
+      "description": "`SHA256:<base64>` fingerprint to verify independently.",
+      "type": "string"
+    },
+    "hostname": {
+      "$ref": "#/$defs/Hostname"
+    },
+    "key_type": {
+      "description": "SSH key algorithm, e.g. `ssh-ed25519`.",
+      "type": "string"
+    },
+    "observed_at": {
+      "$ref": "#/$defs/Timestamp"
+    },
+    "port": {
+      "$ref": "#/$defs/SshPort"
+    },
+    "server_id": {
+      "$ref": "#/$defs/ServerId"
+    },
+    "server_revision": {
+      "$ref": "#/$defs/ServerRevision"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "server_id",
+    "server_revision",
+    "hostname",
+    "port",
+    "key_type",
+    "fingerprint",
+    "observed_at",
+    "differs_from_verified"
+  ],
+  "$defs": {
+    "Hostname": {
+      "type": "string",
+      "maxLength": 253,
+      "minLength": 1
+    },
+    "ServerId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ServerRevision": {
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": 1
+    },
+    "SshPort": {
+      "type": "integer",
+      "default": 22,
+      "maximum": 65535,
+      "minimum": 1
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    }
+  }
+}

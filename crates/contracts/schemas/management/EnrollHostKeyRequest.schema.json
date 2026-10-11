@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EnrollHostKeyRequest",
+  "description": "`POST /api/v1/servers/{server_id}/host-key/enroll`.\n\n`fingerprint` must equal the most recent observation for the current revision; enrollment\nbumps the revision and sets host trust to `verified`.",
+  "type": "object",
+  "properties": {
+    "expected_revision": {
+      "$ref": "#/$defs/ServerRevision"
+    },
+    "fingerprint": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "expected_revision",
+    "fingerprint"
+  ],
+  "$defs": {
+    "ServerRevision": {
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": 1
+    }
+  }
+}

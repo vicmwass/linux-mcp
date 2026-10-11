@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreateApprovalRequest",
+  "description": "`POST /api/v1/approvals` — request approval for an operation. The server resolves the\ntarget, evaluates policy and stores the immutable intent shown to the approver.",
+  "type": "object",
+  "properties": {
+    "operation": {
+      "$ref": "#/$defs/OperationRequest"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "operation"
+  ],
+  "$defs": {
+    "CanonicalArguments": {
+      "description": "Tool arguments; canonicalized with lmcp-canon-v1 (no floats, no secret-named keys).",
+      "type": "object"
+    },
+    "OperationRequest": {
+      "description": "What a caller asks to run. Identity comes from the authenticated context, never from here.",
+      "type": "object",
+      "properties": {
+        "arguments": {
+          "$ref": "#/$defs/CanonicalArguments"
+        },
+        "server_id": {
+          "$ref": "#/$defs/ServerId"
+        },
+        "tool": {
+          "$ref": "#/$defs/ToolId"
+        },
+        "tool_schema_version": {
+          "$ref": "#/$defs/ToolSchemaVersion"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "server_id",
+        "tool",
+        "tool_schema_version",
+        "arguments"
+      ]
+    },
+    "ServerId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ToolId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{0,63}$"
+    },
+    "ToolSchemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}

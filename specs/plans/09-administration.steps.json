@@ -1,0 +1,347 @@
+{
+  "plan_id": "09-administration",
+  "version": 1,
+  "steps": [
+    {
+      "id": "09-01",
+      "title": "Establish administration extension conventions",
+      "depends_on": [
+        "08-console/08-11"
+      ],
+      "resources": [
+        "administration-design"
+      ]
+    },
+    {
+      "id": "09-02",
+      "title": "Freeze Processes contracts",
+      "depends_on": [
+        "09-01"
+      ],
+      "resources": [
+        "contracts-registry",
+        "process-design"
+      ]
+    },
+    {
+      "id": "09-03",
+      "title": "Implement Processes backend",
+      "depends_on": [
+        "09-02"
+      ],
+      "resources": [
+        "resource-processes"
+      ]
+    },
+    {
+      "id": "09-04",
+      "title": "Implement Processes page",
+      "depends_on": [
+        "09-02"
+      ],
+      "resources": [
+        "dashboard-processes"
+      ]
+    },
+    {
+      "id": "09-05",
+      "title": "Release Processes module",
+      "depends_on": [
+        "09-03",
+        "09-04"
+      ],
+      "resources": [
+        "shared-routing",
+        "resource-exports",
+        "dashboard-shell",
+        "process-release"
+      ]
+    },
+    {
+      "id": "09-06",
+      "title": "Freeze Packages contracts",
+      "depends_on": [
+        "09-01"
+      ],
+      "resources": [
+        "contracts-registry",
+        "package-design"
+      ]
+    },
+    {
+      "id": "09-07",
+      "title": "Implement Packages backend",
+      "depends_on": [
+        "09-06"
+      ],
+      "resources": [
+        "resource-packages"
+      ]
+    },
+    {
+      "id": "09-08",
+      "title": "Implement Packages page",
+      "depends_on": [
+        "09-06"
+      ],
+      "resources": [
+        "dashboard-packages"
+      ]
+    },
+    {
+      "id": "09-09",
+      "title": "Release Packages module",
+      "depends_on": [
+        "09-07",
+        "09-08"
+      ],
+      "resources": [
+        "shared-routing",
+        "resource-exports",
+        "dashboard-shell",
+        "package-release"
+      ]
+    },
+    {
+      "id": "09-10",
+      "title": "Freeze Files contracts and path boundary",
+      "depends_on": [
+        "09-01"
+      ],
+      "resources": [
+        "contracts-registry",
+        "file-design"
+      ]
+    },
+    {
+      "id": "09-11",
+      "title": "Implement Files backend",
+      "depends_on": [
+        "09-10"
+      ],
+      "resources": [
+        "resource-files"
+      ]
+    },
+    {
+      "id": "09-12",
+      "title": "Implement Files page",
+      "depends_on": [
+        "09-10"
+      ],
+      "resources": [
+        "dashboard-files"
+      ]
+    },
+    {
+      "id": "09-13",
+      "title": "Release Files module",
+      "depends_on": [
+        "09-11",
+        "09-12"
+      ],
+      "resources": [
+        "shared-routing",
+        "resource-exports",
+        "dashboard-shell",
+        "file-release"
+      ]
+    },
+    {
+      "id": "09-14",
+      "title": "Freeze Storage read-only contracts",
+      "depends_on": [
+        "09-01"
+      ],
+      "resources": [
+        "contracts-registry",
+        "storage-design"
+      ]
+    },
+    {
+      "id": "09-15",
+      "title": "Implement Storage backend",
+      "depends_on": [
+        "09-14"
+      ],
+      "resources": [
+        "resource-storage"
+      ]
+    },
+    {
+      "id": "09-16",
+      "title": "Implement Storage page",
+      "depends_on": [
+        "09-14"
+      ],
+      "resources": [
+        "dashboard-storage"
+      ]
+    },
+    {
+      "id": "09-17",
+      "title": "Release Storage module",
+      "depends_on": [
+        "09-15",
+        "09-16"
+      ],
+      "resources": [
+        "shared-routing",
+        "resource-exports",
+        "dashboard-shell",
+        "storage-release"
+      ]
+    },
+    {
+      "id": "09-18",
+      "title": "Freeze Network contracts and action allowlist",
+      "depends_on": [
+        "09-01"
+      ],
+      "resources": [
+        "contracts-registry",
+        "network-design"
+      ]
+    },
+    {
+      "id": "09-19",
+      "title": "Implement Network backend",
+      "depends_on": [
+        "09-18"
+      ],
+      "resources": [
+        "resource-network"
+      ]
+    },
+    {
+      "id": "09-20",
+      "title": "Implement Network page",
+      "depends_on": [
+        "09-18"
+      ],
+      "resources": [
+        "dashboard-network"
+      ]
+    },
+    {
+      "id": "09-21",
+      "title": "Release Network module",
+      "depends_on": [
+        "09-19",
+        "09-20"
+      ],
+      "resources": [
+        "shared-routing",
+        "resource-exports",
+        "dashboard-shell",
+        "network-release"
+      ]
+    },
+    {
+      "id": "09-22",
+      "title": "Freeze Scheduled Jobs contracts",
+      "depends_on": [
+        "09-01"
+      ],
+      "resources": [
+        "contracts-registry",
+        "jobs-design"
+      ]
+    },
+    {
+      "id": "09-23",
+      "title": "Implement Scheduled Jobs backend",
+      "depends_on": [
+        "09-22"
+      ],
+      "resources": [
+        "resource-jobs"
+      ]
+    },
+    {
+      "id": "09-24",
+      "title": "Implement Scheduled Jobs page",
+      "depends_on": [
+        "09-22"
+      ],
+      "resources": [
+        "dashboard-jobs"
+      ]
+    },
+    {
+      "id": "09-25",
+      "title": "Release Scheduled Jobs module",
+      "depends_on": [
+        "09-23",
+        "09-24"
+      ],
+      "resources": [
+        "shared-routing",
+        "resource-exports",
+        "dashboard-shell",
+        "jobs-release"
+      ]
+    },
+    {
+      "id": "09-26",
+      "title": "Freeze Access-management extensions",
+      "depends_on": [
+        "09-01"
+      ],
+      "resources": [
+        "contracts-registry",
+        "access-design"
+      ]
+    },
+    {
+      "id": "09-27",
+      "title": "Implement Access backend",
+      "depends_on": [
+        "09-26"
+      ],
+      "resources": [
+        "resource-access"
+      ]
+    },
+    {
+      "id": "09-28",
+      "title": "Implement Access page",
+      "depends_on": [
+        "09-26"
+      ],
+      "resources": [
+        "dashboard-access"
+      ]
+    },
+    {
+      "id": "09-29",
+      "title": "Release Access module",
+      "depends_on": [
+        "09-27",
+        "09-28"
+      ],
+      "resources": [
+        "shared-routing",
+        "resource-exports",
+        "dashboard-shell",
+        "access-release"
+      ]
+    },
+    {
+      "id": "09-30",
+      "title": "Publish complete administration coverage",
+      "depends_on": [
+        "09-05",
+        "09-09",
+        "09-13",
+        "09-17",
+        "09-21",
+        "09-25",
+        "09-29"
+      ],
+      "resources": [
+        "administration-release"
+      ]
+    }
+  ]
+}

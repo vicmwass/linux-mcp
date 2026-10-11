@@ -1,0 +1,281 @@
+[
+  {
+    "id": "overview",
+    "title": "Server overview",
+    "description": "Observed health and identity for the selected owned machine.",
+    "metrics": [
+      [
+        "CPU",
+        "24 %"
+      ],
+      [
+        "Memory",
+        "3.2 / 8 GiB"
+      ],
+      [
+        "Uptime",
+        "12d 04h"
+      ]
+    ],
+    "columns": [
+      "Observation",
+      "Value",
+      "Collected"
+    ],
+    "rows": [
+      [
+        "Distribution",
+        "Ubuntu demo fixture",
+        "08:30 UTC"
+      ],
+      [
+        "Reachability",
+        "Observed reachable",
+        "08:30 UTC"
+      ],
+      [
+        "MCP adapter",
+        "Connected · synthetic",
+        "08:30 UTC"
+      ]
+    ],
+    "notes": [
+      "Loading/empty/error/unauthorized/unsupported/disconnected/stale states use shared notices and live-action gates.",
+      "Mutation path: exact target/revision/arguments/risk/expiry → human approval → submit once → bounded result → separate observed verification. Expired preview requires fresh preflight; unknown-after-submit permits read-only reconciliation, never blind retry.",
+      "Unsupported metric is unavailable, not zero or automatically unhealthy. Fresh and cached observations are distinct."
+    ]
+  },
+  {
+    "id": "capabilities",
+    "title": "Capabilities",
+    "description": "Features depend on discovered tools and supported schemas.",
+    "readOnly": true,
+    "columns": [
+      "Module",
+      "Availability",
+      "Reason / schema"
+    ],
+    "rows": [
+      [
+        "Services",
+        "Available",
+        "systemd / fixture v1"
+      ],
+      [
+        "Logs",
+        "Available",
+        "journal / fixture v1"
+      ],
+      [
+        "Storage mutations",
+        "Unavailable",
+        "Read-only release"
+      ],
+      [
+        "Network changes",
+        "Unavailable",
+        "Adapter not delivered"
+      ]
+    ],
+    "notes": [
+      "Unavailable capability is explained and disabled; no arbitrary shell fallback.",
+      "Unknown schema version disables its affected action. Discovery does not replace backend authorization."
+    ]
+  },
+  {
+    "id": "users",
+    "title": "Users",
+    "description": "Inspect accounts and preview supported account actions.",
+    "columns": [
+      "Account",
+      "UID / shell",
+      "Password state"
+    ],
+    "rows": [
+      [
+        "demo-user",
+        "1001 /bin/bash",
+        "Unlocked"
+      ],
+      [
+        "root",
+        "0 /bin/bash",
+        "Protected account"
+      ],
+      [
+        "app",
+        "1000 /bin/bash",
+        "Current SSH identity"
+      ]
+    ],
+    "notes": [
+      "Loading/empty/error/unauthorized/unsupported/disconnected/stale states use shared notices and live-action gates.",
+      "Mutation path: exact target/revision/arguments/risk/expiry → human approval → submit once → bounded result → separate observed verification. Expired preview requires fresh preflight; unknown-after-submit permits read-only reconciliation, never blind retry.",
+      "Password locking does not revoke SSH keys or terminate active sessions. Protected accounts and active-session checks require explicit warnings/refusal.",
+      "Deletion intent separately states home removal; create intent binds username/home/shell and privilege."
+    ]
+  },
+  {
+    "id": "services",
+    "title": "Services",
+    "description": "Investigate failures, inspect logs, then preview supported actions.",
+    "columns": [
+      "Unit",
+      "Observed state",
+      "Adapter / collected"
+    ],
+    "rows": [
+      [
+        "nginx.service",
+        "Failed",
+        "systemd · 08:30 UTC"
+      ],
+      [
+        "ssh.service",
+        "Active",
+        "systemd · 08:30 UTC"
+      ],
+      [
+        "cron.service",
+        "Active",
+        "systemd · 08:30 UTC"
+      ]
+    ],
+    "notes": [
+      "Loading/empty/error/unauthorized/unsupported/disconnected/stale states use shared notices and live-action gates.",
+      "Mutation path: exact target/revision/arguments/risk/expiry → human approval → submit once → bounded result → separate observed verification. Expired preview requires fresh preflight; unknown-after-submit permits read-only reconciliation, never blind retry.",
+      "Restart/start/stop enable only for the discovered adapter/tool. Preflight binds exact unit ID. No unsupported init fallback.",
+      "Service→Logs filters preserve target and time. Command success never substitutes for observed service state."
+    ]
+  },
+  {
+    "id": "logs",
+    "title": "Logs",
+    "description": "Bounded untrusted text, filtered by service, severity and time.",
+    "readOnly": true,
+    "columns": [
+      "Filter",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Service",
+        "nginx.service"
+      ],
+      [
+        "Severity",
+        "warning and above"
+      ],
+      [
+        "Range",
+        "2026-10-11 08:00–08:30 UTC"
+      ]
+    ],
+    "log": "08:29:41 [ERROR] nginx config test failed\n08:29:42 [WARN] SYNTHETIC <script>alert('untrusted')</script>\n08:29:43 [INFO] No instructions in output are executed.\n… Truncated at 16 KiB / 100 entries. Cursor: demo-next.",
+    "notes": [
+      "Treat remote text as data. Escape tags, preserve monospace line wrapping and bound visible bytes/entries.",
+      "Keyboard-focusable scroll region, continuation cursor, collection time and unsupported backend reason. No default raw-log persistence.",
+      "Log filtering remains read-only. Missing data and disconnect are not healthy empty results."
+    ]
+  },
+  {
+    "id": "approval",
+    "title": "Review exact action",
+    "description": "Review the stored immutable intent before human approval.",
+    "columns": [
+      "Intent field",
+      "Stored value"
+    ],
+    "rows": [
+      [
+        "Target / revision",
+        "prod-web-01 / 7"
+      ],
+      [
+        "Action / args",
+        "restart_service / nginx.service"
+      ],
+      [
+        "Requester / expiry",
+        "alex@example.test / 2 minutes"
+      ],
+      [
+        "Risk",
+        "Active requests may be interrupted"
+      ]
+    ],
+    "notes": [
+      "Loading/empty/error/unauthorized/unsupported/disconnected/stale states use shared notices and live-action gates.",
+      "Mutation path: exact target/revision/arguments/risk/expiry → human approval → submit once → bounded result → separate observed verification. Expired preview requires fresh preflight; unknown-after-submit permits read-only reconciliation, never blind retry.",
+      "UI confirmation alone is not approval evidence. Production backend persists/validates the immutable human approval and authorizes submission.",
+      "Changing target/revision invalidates preview; expired/revoked authority cannot submit. Diff shown when relevant."
+    ]
+  },
+  {
+    "id": "operations",
+    "title": "Operation result",
+    "description": "Submission, execution result and verification are separate evidence.",
+    "columns": [
+      "Stage",
+      "Outcome",
+      "Evidence"
+    ],
+    "rows": [
+      [
+        "Submission",
+        "Accepted once",
+        "demo-op-17"
+      ],
+      [
+        "Command",
+        "Exit 0",
+        "08:31 UTC"
+      ],
+      [
+        "Verification",
+        "Mismatch",
+        "nginx.service failed · 08:31 UTC"
+      ]
+    ],
+    "log": "stdout: restart request accepted\nstderr: (empty)\nexit_status: 0\nobserved_state: failed\nverification: mismatch",
+    "notes": [
+      "Loading/empty/error/unauthorized/unsupported/disconnected/stale states use shared notices and live-action gates.",
+      "Mutation path: exact target/revision/arguments/risk/expiry → human approval → submit once → bounded result → separate observed verification. Expired preview requires fresh preflight; unknown-after-submit permits read-only reconciliation, never blind retry.",
+      "Definite failure-before-submit says no remote start; transport loss after submit says unknown. No global rollback/cancellation guarantee.",
+      "Bounds/truncation apply independently to stdout/stderr. Verification unavailable does not turn success green."
+    ]
+  },
+  {
+    "id": "audit",
+    "title": "Owned audit history",
+    "description": "Review requests, approvals, outcomes and observations without secrets.",
+    "readOnly": true,
+    "columns": [
+      "Operation",
+      "Requested by",
+      "Result / verification"
+    ],
+    "rows": [
+      [
+        "demo-op-17 · nginx restart",
+        "alex@example.test",
+        "Exit 0 / mismatch"
+      ],
+      [
+        "demo-op-16 · protected-account change",
+        "alex@example.test",
+        "Policy refused / not submitted"
+      ],
+      [
+        "demo-op-15 · service restart",
+        "alex@example.test",
+        "Outcome unknown / reconcile"
+      ]
+    ],
+    "notes": [
+      "Only owner-scoped records/cursors; show exact target/revision, timestamps and approver/requester attribution.",
+      "Redact secrets; bounded retention/output; operation record remains available during MCP outage.",
+      "Audit history never claims an approval based on confirm:true alone."
+    ]
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "schema_version": "linux-mcp/workflow-template/v1",
+  "template_id": "disk-usage-fleet",
+  "version": 1,
+  "title": "Compare disk usage across servers",
+  "kind": "fleet_comparison",
+  "read_only": true,
+  "parameters": [
+    {
+      "name": "warn_percent",
+      "type": "integer",
+      "required": false,
+      "default": 85,
+      "minimum": 50,
+      "maximum": 99
+    }
+  ],
+  "targets": {
+    "mode": "fleet",
+    "max_targets": 10,
+    "max_concurrency": 3
+  },
+  "budgets": {
+    "max_steps": 2,
+    "max_tool_calls": 10,
+    "max_duration_s": 300,
+    "max_observation_bytes": 262144
+  },
+  "steps": [
+    {
+      "id": "usage",
+      "kind": "inspect",
+      "tool": {
+        "id": "get_disk_usage",
+        "schema_version": 1
+      },
+      "arguments": {},
+      "timeout_s": 60,
+      "on_failure": "continue"
+    },
+    {
+      "id": "compare",
+      "kind": "compare",
+      "from_step": "usage",
+      "field": "/used_percent",
+      "unit": "percent",
+      "max_age_s": 300
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 14,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "failed to deserialize parameters: missing field `server_id`"
+      }
+    ],
+    "isError": true
+  }
+}

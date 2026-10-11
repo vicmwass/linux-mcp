@@ -1,0 +1,41 @@
+[package]
+name = "linux-mcp-contracts"
+version = "1.0.0"
+edition = "2024"
+description = "Shared contracts, wire schemas and mock adapters for the multi-user linux-mcp service"
+license = "MIT"
+publish = false
+
+[lib]
+name = "linux_mcp_contracts"
+
+[features]
+default = ["public", "schema"]
+# Wire DTOs, IDs, errors, canonicalization. Browser-safe.
+public = []
+# JSON Schema derivation for wire types.
+schema = ["public", "dep:schemars"]
+# Server-side trusted identity, credential handles, operation authority and service traits.
+backend = ["public", "dep:async-trait", "dep:zeroize", "uuid/v4"]
+# In-memory adapters and scenarios for tests and demos. Never enable in production.
+test-support = ["backend"]
+
+[dependencies]
+chrono = { version = "0.4.45", default-features = false, features = ["serde", "std"] }
+schemars = { version = "1.2", optional = true, features = ["chrono04", "uuid1"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+thiserror = "2"
+# No default features: uuid's `std` feature pulls weak wasm-bindgen references into every wasm32 resolve.
+uuid = { version = "1.26", default-features = false, features = ["serde"] }
+async-trait = { version = "0.1", optional = true }
+zeroize = { version = "1.9", optional = true }
+
+[dev-dependencies]
+serde_json = "1"
+
+[[test]]
+name = "consumer_probes"
+path = "tests/consumer-probes/main.rs"
+required-features = ["test-support"]

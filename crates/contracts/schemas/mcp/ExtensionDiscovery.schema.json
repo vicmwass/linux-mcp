@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExtensionDiscovery",
+  "description": "Initialize-time discovery extension a v1 server advertises under\n`capabilities.experimental[\"linux-mcp\"]`; clients that do not see it use legacy behavior.",
+  "type": "object",
+  "properties": {
+    "approval_flow": {
+      "type": "boolean"
+    },
+    "schema_version": {
+      "$ref": "#/$defs/ExtensionVersionV1"
+    },
+    "structured_results": {
+      "type": "boolean"
+    },
+    "tools": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ToolId"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "tools",
+    "approval_flow",
+    "structured_results"
+  ],
+  "$defs": {
+    "ExtensionVersionV1": {
+      "type": "string",
+      "const": "linux-mcp/v1"
+    },
+    "ToolId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{0,63}$"
+    }
+  }
+}

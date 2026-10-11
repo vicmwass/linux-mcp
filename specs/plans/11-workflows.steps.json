@@ -1,0 +1,155 @@
+{
+  "plan_id": "11-workflows",
+  "version": 2,
+  "steps": [
+    {
+      "id": "11-01",
+      "title": "Freeze bounded workflow contracts",
+      "depends_on": [
+        "00-contracts/00-12"
+      ],
+      "resources": [
+        "contracts-registry",
+        "workflow-design"
+      ]
+    },
+    {
+      "id": "11-02",
+      "title": "Bootstrap workflow storage and runner skeleton",
+      "depends_on": [
+        "11-01"
+      ],
+      "resources": [
+        "workspace-manifests",
+        "migration-registry",
+        "workflow-bootstrap"
+      ]
+    },
+    {
+      "id": "11-03",
+      "title": "Implement read-only troubleshooting",
+      "depends_on": [
+        "11-02"
+      ],
+      "resources": [
+        "workflow-troubleshooting"
+      ]
+    },
+    {
+      "id": "11-04",
+      "title": "Implement fleet comparison",
+      "depends_on": [
+        "11-02"
+      ],
+      "resources": [
+        "workflow-fleet"
+      ]
+    },
+    {
+      "id": "11-05",
+      "title": "Implement guarded maintenance and recovery",
+      "depends_on": [
+        "11-02"
+      ],
+      "resources": [
+        "workflow-mutations"
+      ]
+    },
+    {
+      "id": "11-06",
+      "title": "Implement workflow pages and progress",
+      "depends_on": [
+        "11-02",
+        "05-dashboard/05-02"
+      ],
+      "resources": [
+        "dashboard-workflows"
+      ]
+    },
+    {
+      "id": "11-07",
+      "title": "Compose real workflow adapters",
+      "depends_on": [
+        "11-03",
+        "11-04",
+        "11-05",
+        "11-06",
+        "08-console/08-11",
+        "10-monitoring/10-09"
+      ],
+      "resources": [
+        "shared-routing",
+        "dashboard-shell",
+        "workflow-integration"
+      ]
+    },
+    {
+      "id": "11-08",
+      "title": "Validate restart, ambiguity and authorization",
+      "depends_on": [
+        "11-07"
+      ],
+      "resources": [
+        "workflow-fault-tests"
+      ]
+    },
+    {
+      "id": "11-09",
+      "title": "Publish deterministic workflow release",
+      "depends_on": [
+        "11-08"
+      ],
+      "resources": [
+        "workflow-release",
+        "deploy-manifests"
+      ]
+    },
+    {
+      "id": "11-10",
+      "title": "Assess and freeze optional WebMCP integration",
+      "depends_on": [
+        "11-09"
+      ],
+      "resources": [
+        "webmcp-design"
+      ],
+      "opt_in": "webmcp"
+    },
+    {
+      "id": "11-11",
+      "title": "Build and validate optional WebMCP adapter",
+      "depends_on": [
+        "11-10"
+      ],
+      "resources": [
+        "dashboard-webmcp",
+        "shared-routing"
+      ],
+      "opt_in": "webmcp"
+    },
+    {
+      "id": "11-12",
+      "title": "Design optional embedded assistant",
+      "depends_on": [
+        "11-09"
+      ],
+      "resources": [
+        "assistant-design"
+      ],
+      "opt_in": "assistant"
+    },
+    {
+      "id": "11-13",
+      "title": "Build and validate optional assistant",
+      "depends_on": [
+        "11-12"
+      ],
+      "resources": [
+        "workflow-assistant",
+        "dashboard-assistant",
+        "shared-routing"
+      ],
+      "opt_in": "assistant"
+    }
+  ]
+}

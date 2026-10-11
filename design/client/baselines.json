@@ -1,0 +1,15 @@
+{
+  "currentImplementationBaseline": "0.1.0",
+  "versions": [
+    {
+      "version": "0.1.0",
+      "state": "published",
+      "path": "versions/0.1.0",
+      "manifest": "versions/0.1.0/manifest.json",
+      "manifestSha256": "5933477fa8d39ead04e367a741d0db08d7ac2072515eee5db82b930336c3aafc",
+      "reviewEvidence": "versions/0.1.0/review/report.md",
+      "humanApproval": null,
+      "adoption": "Pin explicitly; later changes use coordinator review/reopen or a supplemental revision"
+    }
+  ]
+}

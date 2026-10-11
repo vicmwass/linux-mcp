@@ -1,0 +1,94 @@
+{
+  "plan_id": "03-execution",
+  "version": 1,
+  "steps": [
+    {
+      "id": "03-01",
+      "title": "Record behavior and extraction boundaries",
+      "depends_on": [
+        "00-contracts/00-12"
+      ],
+      "resources": [
+        "execution-design"
+      ]
+    },
+    {
+      "id": "03-02",
+      "title": "Extract library without behavior changes",
+      "depends_on": [
+        "03-01"
+      ],
+      "resources": [
+        "workspace-manifests",
+        "execution-extraction",
+        "execution-exports",
+        "legacy-runtime"
+      ]
+    },
+    {
+      "id": "03-03",
+      "title": "Implement authorized target and transport boundary",
+      "depends_on": [
+        "03-02"
+      ],
+      "resources": [
+        "execution-targets"
+      ]
+    },
+    {
+      "id": "03-04",
+      "title": "Implement tenant-aware pools and capability cache",
+      "depends_on": [
+        "03-03"
+      ],
+      "resources": [
+        "execution-caches"
+      ]
+    },
+    {
+      "id": "03-05",
+      "title": "Split preflight and guarded submission",
+      "depends_on": [
+        "03-03"
+      ],
+      "resources": [
+        "execution-policy"
+      ]
+    },
+    {
+      "id": "03-06",
+      "title": "Implement limits and submission outcomes",
+      "depends_on": [
+        "03-03"
+      ],
+      "resources": [
+        "execution-limits"
+      ]
+    },
+    {
+      "id": "03-07",
+      "title": "Compose core and legacy regression adapter",
+      "depends_on": [
+        "03-04",
+        "03-05",
+        "03-06"
+      ],
+      "resources": [
+        "execution-exports",
+        "legacy-runtime",
+        "execution-integration"
+      ]
+    },
+    {
+      "id": "03-08",
+      "title": "Validate real providers and publish handoff",
+      "depends_on": [
+        "03-07",
+        "01-inventory/01-08"
+      ],
+      "resources": [
+        "execution-live-tests"
+      ]
+    }
+  ]
+}

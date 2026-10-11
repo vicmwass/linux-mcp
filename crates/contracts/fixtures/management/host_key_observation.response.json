@@ -1,0 +1,10 @@
+{
+  "server_id": "3f2b8c1e-5d4a-4b6e-9f10-2a3b4c5d6e7f",
+  "server_revision": 5,
+  "hostname": "build-01.example.internal",
+  "port": 22,
+  "key_type": "ssh-ed25519",
+  "fingerprint": "SHA256:AAAAexamplefingerprintAAAAAAAAAAAAAAAAAAAAA",
+  "observed_at": "2026-10-11T08:00:00.000Z",
+  "differs_from_verified": false
+}

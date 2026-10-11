@@ -1,0 +1,127 @@
+{
+  "plan_id": "08-console",
+  "version": 1,
+  "steps": [
+    {
+      "id": "08-01",
+      "title": "Freeze health/service/log contracts",
+      "depends_on": [
+        "07-deployment/07-08"
+      ],
+      "resources": [
+        "contracts-registry",
+        "console-design",
+        "workspace-manifests"
+      ]
+    },
+    {
+      "id": "08-02",
+      "title": "Implement structured health tool",
+      "depends_on": [
+        "08-01"
+      ],
+      "resources": [
+        "resource-health"
+      ]
+    },
+    {
+      "id": "08-03",
+      "title": "Implement Overview page",
+      "depends_on": [
+        "08-01"
+      ],
+      "resources": [
+        "dashboard-console-overview"
+      ]
+    },
+    {
+      "id": "08-04",
+      "title": "Implement service tools and verification",
+      "depends_on": [
+        "08-01"
+      ],
+      "resources": [
+        "resource-services"
+      ]
+    },
+    {
+      "id": "08-05",
+      "title": "Implement Services page",
+      "depends_on": [
+        "08-01"
+      ],
+      "resources": [
+        "dashboard-console-services"
+      ]
+    },
+    {
+      "id": "08-06",
+      "title": "Implement bounded log tools",
+      "depends_on": [
+        "08-01"
+      ],
+      "resources": [
+        "resource-logs"
+      ]
+    },
+    {
+      "id": "08-07",
+      "title": "Implement Logs page",
+      "depends_on": [
+        "08-01"
+      ],
+      "resources": [
+        "dashboard-console-logs"
+      ]
+    },
+    {
+      "id": "08-08",
+      "title": "Integrate existing Users page semantics",
+      "depends_on": [
+        "08-01"
+      ],
+      "resources": [
+        "dashboard-console-users"
+      ]
+    },
+    {
+      "id": "08-09",
+      "title": "Validate standalone modules and schema compatibility",
+      "depends_on": [
+        "08-02",
+        "08-03",
+        "08-04",
+        "08-05",
+        "08-06",
+        "08-07",
+        "08-08"
+      ],
+      "resources": [
+        "console-module-tests"
+      ]
+    },
+    {
+      "id": "08-10",
+      "title": "Register tools/pages and run real console workflow",
+      "depends_on": [
+        "08-09"
+      ],
+      "resources": [
+        "shared-routing",
+        "resource-exports",
+        "dashboard-shell",
+        "console-live-tests"
+      ]
+    },
+    {
+      "id": "08-11",
+      "title": "Publish M2 evidence and handoff",
+      "depends_on": [
+        "08-10"
+      ],
+      "resources": [
+        "console-release"
+      ]
+    }
+  ]
+}

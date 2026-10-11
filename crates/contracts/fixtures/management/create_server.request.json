@@ -1,0 +1,9 @@
+{
+  "display_name": "Build box",
+  "hostname": "build-01.example.internal",
+  "port": 22,
+  "username": "deploy",
+  "environment": "development",
+  "enabled": true,
+  "approval_mode": "medium_and_above"
+}

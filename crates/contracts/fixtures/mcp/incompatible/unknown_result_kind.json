@@ -1,0 +1,8 @@
+{
+  "schema_version": "linux-mcp/v1",
+  "request_id": "0b1c2d3e-4f50-4617-8899-aabbccddeeff",
+  "result": {
+    "kind": "approved",
+    "approval_id": "a9900000-0000-4000-8000-000000000001"
+  }
+}

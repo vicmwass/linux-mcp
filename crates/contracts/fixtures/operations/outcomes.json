@@ -1,0 +1,24 @@
+[
+  {
+    "status": "succeeded",
+    "exit_status": {"kind": "code", "code": 0},
+    "stdout": {"text": "uid=0(root)\n", "truncated": false, "original_bytes": 12, "lossy": false},
+    "stderr": {"text": "", "truncated": false, "original_bytes": 0, "lossy": false},
+    "verification": "not_attempted"
+  },
+  {
+    "status": "succeeded",
+    "exit_status": {"kind": "code", "code": 1},
+    "stdout": {"text": "", "truncated": false, "original_bytes": 0, "lossy": false},
+    "stderr": {"text": "userdel: user 'olduser' does not exist\n", "truncated": false, "original_bytes": 39, "lossy": false},
+    "verification": "not_attempted"
+  },
+  {"status": "refused", "reason": "policy_denied", "detail": "Catastrophic delete is never permitted."},
+  {"status": "refused", "reason": "approval_required", "detail": null},
+  {"status": "failed_before_submission", "cause": "timeout"},
+  {"status": "failed_before_submission", "cause": "host_key_rejected"},
+  {"status": "unknown_after_submission", "cause": "disconnected", "partial_stdout": null, "partial_stderr": null},
+  {"status": "unknown_after_submission", "cause": "timeout",
+   "partial_stdout": {"text": "partial", "truncated": true, "original_bytes": 2097152, "lossy": false},
+   "partial_stderr": null}
+]

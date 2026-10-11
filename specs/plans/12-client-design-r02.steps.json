@@ -1,0 +1,12 @@
+{
+  "plan_id": "12-client-design-r02",
+  "version": 1,
+  "steps": [
+    {"id":"12-01","title":"Review and scope design refresh","depends_on":["12-client-design/12-10"],"resources":["client-design-review"]},
+    {"id":"12-02","title":"Revise visual foundations","depends_on":["12-01"],"resources":["client-design-system"]},
+    {"id":"12-03","title":"Revise preview presentation","depends_on":["12-02"],"resources":["client-design-preview"]},
+    {"id":"12-04","title":"Review responsive and accessibility behavior","depends_on":["12-03"],"resources":["client-design-preview","client-design-review"]},
+    {"id":"12-05","title":"Prepare adoption handoff","depends_on":["12-04"],"resources":["client-design-handoff"]},
+    {"id":"12-06","title":"Publish design refresh revision","depends_on":["12-05"],"resources":["client-design-release"]}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "profile": "fixture-only",
+  "installations": [
+    {"id": "inst-alice", "issuer": "https://fixture-a.invalid", "owner": "alice"},
+    {"id": "inst-bob", "issuer": "https://fixture-b.invalid", "owner": "bob"}
+  ],
+  "users": ["alice", "bob"],
+  "servers": [
+    {"id": "srv-alice", "installation": "inst-alice", "owner": "alice", "label": "shared-label", "host": "target-alice.invalid", "credential": "fake-alice"},
+    {"id": "srv-bob", "installation": "inst-bob", "owner": "bob", "label": "shared-label", "host": "target-bob.invalid", "credential": "fake-bob"}
+  ],
+  "targets": ["target-alice.invalid", "target-bob.invalid"],
+  "faults": ["before_submit", "after_submit", "output_flood", "provider_unavailable", "database_unavailable"]
+}

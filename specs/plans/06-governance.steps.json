@@ -1,0 +1,81 @@
+{
+  "plan_id": "06-governance",
+  "version": 1,
+  "steps": [
+    {
+      "id": "06-01",
+      "title": "Define durable approval/dispatch state machine",
+      "depends_on": [
+        "00-contracts/00-12"
+      ],
+      "resources": [
+        "governance-design"
+      ]
+    },
+    {
+      "id": "06-02",
+      "title": "Bootstrap tables and repository primitives",
+      "depends_on": [
+        "06-01"
+      ],
+      "resources": [
+        "workspace-manifests",
+        "migration-registry",
+        "governance-bootstrap"
+      ]
+    },
+    {
+      "id": "06-03",
+      "title": "Implement bound approval service",
+      "depends_on": [
+        "06-02"
+      ],
+      "resources": [
+        "governance-approvals"
+      ]
+    },
+    {
+      "id": "06-04",
+      "title": "Implement durable audit and recovery",
+      "depends_on": [
+        "06-02"
+      ],
+      "resources": [
+        "governance-audit"
+      ]
+    },
+    {
+      "id": "06-05",
+      "title": "Compose transactional dispatch gate and handlers",
+      "depends_on": [
+        "06-03",
+        "06-04"
+      ],
+      "resources": [
+        "governance-exports",
+        "shared-routing"
+      ]
+    },
+    {
+      "id": "06-06",
+      "title": "Integrate identity and validate failure matrix",
+      "depends_on": [
+        "06-05",
+        "02-identity/02-08"
+      ],
+      "resources": [
+        "governance-integration"
+      ]
+    },
+    {
+      "id": "06-07",
+      "title": "Publish governance handoff",
+      "depends_on": [
+        "06-06"
+      ],
+      "resources": [
+        "governance-release"
+      ]
+    }
+  ]
+}

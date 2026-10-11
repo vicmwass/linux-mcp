@@ -1,0 +1,16 @@
+{
+  "error": {
+    "code": "validation",
+    "message": "The request is invalid.",
+    "request_id": "0b1c2d3e-4f50-4617-8899-aabbccddeeff",
+    "details": {
+      "kind": "field_violations",
+      "violations": [
+        {
+          "field": "hostname",
+          "rule": "invalid_format"
+        }
+      ]
+    }
+  }
+}

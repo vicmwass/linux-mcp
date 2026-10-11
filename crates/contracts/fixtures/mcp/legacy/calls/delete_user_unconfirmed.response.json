@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 12,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Failed to delete user:\nUser deletion requires explicit confirmation. Set confirm=true."
+      }
+    ],
+    "isError": false
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreateServerRequest",
+  "description": "`POST /api/v1/servers`. The owner comes from the authenticated principal.",
+  "type": "object",
+  "properties": {
+    "approval_mode": {
+      "description": "Defaults to `medium_and_above`. A non-default value requires an interactive browser session.",
+      "$ref": "#/$defs/ApprovalMode",
+      "default": "medium_and_above"
+    },
+    "display_name": {
+      "$ref": "#/$defs/DisplayName"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "environment": {
+      "$ref": "#/$defs/Environment"
+    },
+    "hostname": {
+      "$ref": "#/$defs/Hostname"
+    },
+    "port": {
+      "$ref": "#/$defs/SshPort",
+      "default": 22
+    },
+    "username": {
+      "$ref": "#/$defs/SshUsername"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "display_name",
+    "hostname",
+    "username",
+    "environment"
+  ],
+  "$defs": {
+    "ApprovalMode": {
+      "description": "Per-server rule for which operations need human approval (decisions.md D11).\n\nSet with the server configuration. `MediumAndAbove` is the default and the recommended\nsetting. Neither mode can bypass a policy denial, and `confirm: true` is never approval.\nBecause lowering the threshold weakens a safeguard, changing this setting away from the\ndefault requires an interactive browser session (not an MCP or delegated token), so an\nagent cannot disable approvals for itself. Any change bumps the server revision, which\ninvalidates pending approvals bound to the old setting.",
+      "oneOf": [
+        {
+          "description": "Medium, high and critical-risk mutations need approval (critical is always denied).",
+          "type": "string",
+          "const": "medium_and_above"
+        },
+        {
+          "description": "Only high-risk mutations need approval; medium-risk operations (for example creating a\nuser, restarting a service, installing a package) run without it.",
+          "type": "string",
+          "const": "high_and_above"
+        }
+      ]
+    },
+    "DisplayName": {
+      "type": "string",
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "Environment": {
+      "type": "string",
+      "enum": [
+        "development",
+        "testing",
+        "staging",
+        "production"
+      ]
+    },
+    "Hostname": {
+      "type": "string",
+      "maxLength": 253,
+      "minLength": 1
+    },
+    "SshPort": {
+      "type": "integer",
+      "default": 22,
+      "maximum": 65535,
+      "minimum": 1
+    },
+    "SshUsername": {
+      "type": "string",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[a-z_][a-z0-9_-]*$"
+    }
+  }
+}

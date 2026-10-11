@@ -1,0 +1,214 @@
+[
+  {
+    "id": "processes",
+    "title": "Processes",
+    "description": "Bind actions to PID and process start identity, not PID alone.",
+    "columns": [
+      "Process identity",
+      "User / command",
+      "CPU / memory"
+    ],
+    "rows": [
+      [
+        "2142 · started 08:10 UTC",
+        "app · demo-worker",
+        "12 % / 180 MiB"
+      ],
+      [
+        "781 · started 04:00 UTC",
+        "root · systemd-journald",
+        "0.4 % / 48 MiB"
+      ]
+    ],
+    "notes": [
+      "Shared review selector covers loading/empty/invalid/unauthorized/unsupported/disconnected/stale and mutation preview/expired/running/refused/failed/unknown/verified/mismatch/unavailable.",
+      "Only capability-delivered, policy-permitted changes enable exact-action preview; backend authorizes independently. Unknown-after-submit offers read-only reconciliation.",
+      "Stale PID/start mismatch invalidates intent; refresh identity before signal. Exact SIGTERM and privilege are shown. No promise to stop all descendants.",
+      "Unsupported process inspection disables mutation. Bounded sorted table; keyboard row detail provides full arguments as plain text."
+    ]
+  },
+  {
+    "id": "packages",
+    "title": "Packages",
+    "description": "Distro-aware packages and explicitly bounded changes.",
+    "columns": [
+      "Package",
+      "Installed → candidate",
+      "State"
+    ],
+    "rows": [
+      [
+        "nginx",
+        "1.24.0 → 1.24.1",
+        "Update available"
+      ],
+      [
+        "demo-lib",
+        "2.0 → 2.1",
+        "Previous batch partial"
+      ]
+    ],
+    "notes": [
+      "Shared review selector covers loading/empty/invalid/unauthorized/unsupported/disconnected/stale and mutation preview/expired/running/refused/failed/unknown/verified/mismatch/unavailable.",
+      "Only capability-delivered, policy-permitted changes enable exact-action preview; backend authorizes independently. Unknown-after-submit offers read-only reconciliation.",
+      "Preview exact package names/versions/options/manager, dependency impacts and timeout. Batch updates are not atomic.",
+      "Partial outcome lists each package and unknown items; query installed state before a new preflight. No silent install/remove fallback."
+    ]
+  },
+  {
+    "id": "files",
+    "title": "Files",
+    "description": "Allowed-root browser, bounded content and revision-aware edit preview.",
+    "columns": [
+      "Allowed path",
+      "Owner / mode",
+      "Revision"
+    ],
+    "rows": [
+      [
+        "/etc/nginx/conf.d/demo.conf",
+        "root:root / 0644",
+        "12"
+      ],
+      [
+        "/etc/nginx/nginx.conf",
+        "root:root / 0644",
+        "4"
+      ]
+    ],
+    "log": "--- revision 12 · /etc/nginx/conf.d/demo.conf\n- worker_connections 1024;\n+ worker_connections 2048;\nRead limit 8 KiB · synthetic diff, not submitted.",
+    "notes": [
+      "Shared review selector covers loading/empty/invalid/unauthorized/unsupported/disconnected/stale and mutation preview/expired/running/refused/failed/unknown/verified/mismatch/unavailable.",
+      "Only capability-delivered, policy-permitted changes enable exact-action preview; backend authorizes independently. Unknown-after-submit offers read-only reconciliation.",
+      "Canonical path and symlink policy restrict allowed roots; exact byte/content revision checked at submission. Stale content offers reload/compare, never blind overwrite.",
+      "Plain-text diff and content never execute. Explain backup/reversal only when the operation implements it. Resize editor/scroll internally on mobile."
+    ]
+  },
+  {
+    "id": "storage",
+    "title": "Storage · read-only",
+    "description": "Inspect disks, mounts and filesystem usage. Mutations unavailable.",
+    "readOnly": true,
+    "columns": [
+      "Mount / device",
+      "Usage",
+      "Observation"
+    ],
+    "rows": [
+      [
+        "/ · /dev/vda1",
+        "28 / 80 GiB · 35 %",
+        "08:30 UTC"
+      ],
+      [
+        "/data · /dev/vdb1",
+        "Unavailable",
+        "Collector unsupported"
+      ]
+    ],
+    "notes": [
+      "Shared review selector covers loading/empty/invalid/unauthorized/unsupported/disconnected/stale and mutation preview/expired/running/refused/failed/unknown/verified/mismatch/unavailable.",
+      "Only capability-delivered, policy-permitted changes enable exact-action preview; backend authorizes independently. Unknown-after-submit offers read-only reconciliation.",
+      "Read-first release; destructive resize/format/unmount buttons are absent. No approval dialog can unlock unimplemented storage changes.",
+      "Unavailable field is not 0%. Stale samples retain time/units; no implied generic recovery."
+    ]
+  },
+  {
+    "id": "network",
+    "title": "Network",
+    "description": "Interfaces, addresses, listeners and supported rule inspection.",
+    "readOnly": true,
+    "columns": [
+      "Resource",
+      "Observed value",
+      "Capability"
+    ],
+    "rows": [
+      [
+        "eth0",
+        "192.0.2.10/24",
+        "Read available"
+      ],
+      [
+        "TCP listener",
+        "0.0.0.0:443 / nginx",
+        "Read available"
+      ],
+      [
+        "Firewall changes",
+        "Unavailable",
+        "Adapter not delivered"
+      ]
+    ],
+    "notes": [
+      "Shared review selector covers loading/empty/invalid/unauthorized/unsupported/disconnected/stale and mutation preview/expired/running/refused/failed/unknown/verified/mismatch/unavailable.",
+      "Only capability-delivered, policy-permitted changes enable exact-action preview; backend authorizes independently. Unknown-after-submit offers read-only reconciliation.",
+      "This baseline fixture is read-only. A delivered guarded change must show exact interface/rule and connectivity-loss warning.",
+      "Never promise rollback/recovery timer unless implemented and tested. Disconnect after change means unknown; no automatic replay.",
+      "Unauthorized capability is explained; raw-shell fallback is prohibited."
+    ]
+  },
+  {
+    "id": "jobs",
+    "title": "Scheduled jobs",
+    "description": "Inspect schedules with explicit timezone and execution identity.",
+    "columns": [
+      "Job / adapter",
+      "Schedule / timezone",
+      "User / revision"
+    ],
+    "rows": [
+      [
+        "demo-backup.timer · systemd",
+        "02:00 daily · UTC",
+        "root / 2"
+      ],
+      [
+        "demo-cleanup · cron",
+        "0 3 * * 0 · UTC",
+        "app / 5"
+      ]
+    ],
+    "notes": [
+      "Shared review selector covers loading/empty/invalid/unauthorized/unsupported/disconnected/stale and mutation preview/expired/running/refused/failed/unknown/verified/mismatch/unavailable.",
+      "Only capability-delivered, policy-permitted changes enable exact-action preview; backend authorizes independently. Unknown-after-submit offers read-only reconciliation.",
+      "Validate schedule/timezone/platform identity, paths and privilege before preview. Preview next run times in the declared zone.",
+      "Stale revision prevents overwrite/remove. Unsupported cron/timer adapter explains absence; missing run evidence is unavailable.",
+      "Exact timer/service identifiers and command parameters belong to resource contracts, not browser parsing."
+    ]
+  },
+  {
+    "id": "access",
+    "title": "Access",
+    "description": "Groups, sudo grants and SSH-key metadata with privilege impact.",
+    "columns": [
+      "Subject",
+      "Grant / key metadata",
+      "Impact"
+    ],
+    "rows": [
+      [
+        "demo-user",
+        "sudo group · fixture",
+        "Administrative privileges"
+      ],
+      [
+        "demo-user",
+        "SSH key SHA256:SYNTHETIC",
+        "Key-based login enabled"
+      ],
+      [
+        "root",
+        "Protected account",
+        "Guarded actions denied"
+      ]
+    ],
+    "notes": [
+      "Shared review selector covers loading/empty/invalid/unauthorized/unsupported/disconnected/stale and mutation preview/expired/running/refused/failed/unknown/verified/mismatch/unavailable.",
+      "Only capability-delivered, policy-permitted changes enable exact-action preview; backend authorizes independently. Unknown-after-submit offers read-only reconciliation.",
+      "Never display private key material. Validate key format/fingerprint; preview exact group/key/grant and affected identity.",
+      "Password lock does not revoke SSH keys or terminate sessions. Key removal also does not terminate established sessions.",
+      "Explicit privilege/lockout impact and protected accounts; inspect observed key/group state for verification."
+    ]
+  }
+]

@@ -1,0 +1,93 @@
+{
+  "plan_id": "07-deployment",
+  "version": 1,
+  "steps": [
+    {
+      "id": "07-01",
+      "title": "Define topology and integration test matrix",
+      "depends_on": [
+        "00-contracts/00-12"
+      ],
+      "resources": [
+        "deployment-design"
+      ]
+    },
+    {
+      "id": "07-02",
+      "title": "Build fixture topology and harness",
+      "depends_on": [
+        "07-01"
+      ],
+      "resources": [
+        "deployment-harness"
+      ]
+    },
+    {
+      "id": "07-03",
+      "title": "Build production images and configuration",
+      "depends_on": [
+        "07-01",
+        "02-identity/02-08",
+        "04-mcp/04-08",
+        "05-dashboard/05-09"
+      ],
+      "resources": [
+        "deploy-manifests"
+      ]
+    },
+    {
+      "id": "07-04",
+      "title": "Implement bootstrap, HTTPS and network controls",
+      "depends_on": [
+        "07-03"
+      ],
+      "resources": [
+        "deploy-manifests",
+        "deployment-bootstrap"
+      ]
+    },
+    {
+      "id": "07-05",
+      "title": "Run foundation isolation and real-client matrix",
+      "depends_on": [
+        "07-02",
+        "07-04"
+      ],
+      "resources": [
+        "foundation-integration-tests"
+      ]
+    },
+    {
+      "id": "07-06",
+      "title": "Validate runtime lifecycle and fault handling",
+      "depends_on": [
+        "07-05"
+      ],
+      "resources": [
+        "foundation-fault-tests"
+      ]
+    },
+    {
+      "id": "07-07",
+      "title": "Implement and verify backup, restore and upgrades",
+      "depends_on": [
+        "07-04"
+      ],
+      "resources": [
+        "deployment-recovery"
+      ]
+    },
+    {
+      "id": "07-08",
+      "title": "Publish M1 release evidence and self-hosting guide",
+      "depends_on": [
+        "07-06",
+        "07-07"
+      ],
+      "resources": [
+        "deploy-manifests",
+        "deployment-release"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "linux-mcp/v1",
+  "request_id": "0b1c2d3e-4f50-4617-8899-aabbccddeeff",
+  "result": {
+    "kind": "outcome",
+    "operation_id": "0e000000-0000-4000-8000-000000000001",
+    "server_id": "3f2b8c1e-5d4a-4b6e-9f10-2a3b4c5d6e7f",
+    "submission": "completed",
+    "outcome": {
+      "status": "succeeded",
+      "exit_status": {
+        "kind": "code",
+        "code": 1
+      },
+      "stdout": {
+        "text": "",
+        "truncated": false,
+        "original_bytes": 0,
+        "lossy": false
+      },
+      "stderr": {
+        "text": "userdel: user does not exist\n",
+        "truncated": false,
+        "original_bytes": 28,
+        "lossy": false
+      },
+      "verification": "not_attempted"
+    }
+  }
+}

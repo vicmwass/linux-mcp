@@ -1,0 +1,12 @@
+{
+  "error": {
+    "code": "approval_required",
+    "message": "This operation requires human approval.",
+    "request_id": "0b1c2d3e-4f50-4617-8899-aabbccddeeff",
+    "details": {
+      "kind": "approval_required",
+      "reason": "consumed",
+      "approval_id": "a9900000-0000-4000-8000-000000000001"
+    }
+  }
+}

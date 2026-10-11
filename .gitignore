@@ -17,3 +17,6 @@
 .DS_Store
 Thumbs.db
 __pycache__/
+
+# Live local agent claims; shared by cooperating workers, not by Git
+/specs/plans/.coord/

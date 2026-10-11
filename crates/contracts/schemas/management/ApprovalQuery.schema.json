@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ApprovalQuery",
+  "description": "`GET /api/v1/approvals?status=&cursor=&limit=`.",
+  "type": "object",
+  "properties": {
+    "cursor": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PageCursor"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "limit": {
+      "$ref": "#/$defs/PageLimit",
+      "default": 50
+    },
+    "status": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ApprovalStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "ApprovalStatus": {
+      "description": "Human approval state.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected",
+            "expired"
+          ]
+        },
+        {
+          "description": "Consumed by exactly one dispatch; never reset, even if the outcome is unknown.",
+          "type": "string",
+          "const": "consumed"
+        },
+        {
+          "description": "Target revision, identity or permissions changed after approval.",
+          "type": "string",
+          "const": "invalidated"
+        }
+      ]
+    },
+    "PageCursor": {
+      "type": "string",
+      "maxLength": 512,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "PageLimit": {
+      "type": "integer",
+      "default": 50,
+      "maximum": 200,
+      "minimum": 1
+    }
+  }
+}

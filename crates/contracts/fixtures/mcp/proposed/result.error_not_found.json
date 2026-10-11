@@ -1,0 +1,13 @@
+{
+  "schema_version": "linux-mcp/v1",
+  "request_id": "0b1c2d3e-4f50-4617-8899-aabbccddeeff",
+  "result": {
+    "kind": "error",
+    "error": {
+      "code": "not_found",
+      "message": "The requested resource was not found.",
+      "request_id": "0b1c2d3e-4f50-4617-8899-aabbccddeeff",
+      "details": null
+    }
+  }
+}

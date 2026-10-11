@@ -1,0 +1,97 @@
+{
+  "schema_version": "linux-mcp/workflow-template/v1",
+  "template_id": "failed-service-diagnosis",
+  "version": 1,
+  "title": "Diagnose a failed service",
+  "kind": "troubleshooting",
+  "read_only": true,
+  "parameters": [
+    {
+      "name": "service",
+      "type": "service_unit",
+      "required": true
+    },
+    {
+      "name": "since_minutes",
+      "type": "integer",
+      "required": false,
+      "default": 60,
+      "minimum": 1,
+      "maximum": 1440
+    }
+  ],
+  "targets": {
+    "mode": "single",
+    "max_targets": 1,
+    "max_concurrency": 1
+  },
+  "budgets": {
+    "max_steps": 6,
+    "max_tool_calls": 6,
+    "max_duration_s": 300,
+    "max_observation_bytes": 131072
+  },
+  "steps": [
+    {
+      "id": "status",
+      "kind": "inspect",
+      "tool": {
+        "id": "get_service",
+        "schema_version": 1
+      },
+      "arguments": {
+        "service": {
+          "param": "service"
+        }
+      },
+      "timeout_s": 30,
+      "on_failure": "stop"
+    },
+    {
+      "id": "failed",
+      "kind": "checkpoint",
+      "condition": {
+        "from_step": "status",
+        "path": "/state",
+        "op": "eq",
+        "value": "failed"
+      },
+      "if_false": "stop"
+    },
+    {
+      "id": "logs",
+      "kind": "inspect",
+      "tool": {
+        "id": "query_logs",
+        "schema_version": 1
+      },
+      "arguments": {
+        "service": {
+          "param": "service"
+        },
+        "since_minutes": {
+          "param": "since_minutes"
+        },
+        "max_entries": {
+          "literal": 200
+        }
+      },
+      "timeout_s": 60,
+      "on_failure": "stop"
+    },
+    {
+      "id": "propose",
+      "kind": "suggest",
+      "template_ref": "restart-service",
+      "parameters": {
+        "service": {
+          "observation": {
+            "step": "status",
+            "path": "/unit",
+            "validator": "service_unit"
+          }
+        }
+      }
+    }
+  ]
+}

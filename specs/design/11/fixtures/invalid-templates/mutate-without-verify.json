@@ -1,0 +1,90 @@
+{
+  "expect_lint": [
+    "L8"
+  ],
+  "template": {
+    "schema_version": "linux-mcp/workflow-template/v1",
+    "template_id": "restart-service",
+    "version": 1,
+    "title": "Restart a service and verify it",
+    "kind": "maintenance",
+    "read_only": false,
+    "parameters": [
+      {
+        "name": "service",
+        "type": "service_unit",
+        "required": true
+      }
+    ],
+    "targets": {
+      "mode": "single",
+      "max_targets": 1,
+      "max_concurrency": 1
+    },
+    "budgets": {
+      "max_steps": 4,
+      "max_tool_calls": 12,
+      "max_duration_s": 900,
+      "max_observation_bytes": 65536
+    },
+    "steps": [
+      {
+        "id": "before",
+        "kind": "inspect",
+        "tool": {
+          "id": "get_service",
+          "schema_version": 1
+        },
+        "arguments": {
+          "service": {
+            "param": "service"
+          }
+        },
+        "timeout_s": 30,
+        "on_failure": "stop"
+      },
+      {
+        "id": "restart",
+        "kind": "mutate",
+        "tool": {
+          "id": "service_action",
+          "schema_version": 1
+        },
+        "arguments": {
+          "service": {
+            "param": "service"
+          },
+          "action": {
+            "literal": "restart"
+          }
+        },
+        "max_risk": "medium",
+        "approval_expiry_s": 900,
+        "verify_step": "before",
+        "on_unknown": "stop"
+      },
+      {
+        "id": "after",
+        "kind": "verify",
+        "after_step": "restart",
+        "tool": {
+          "id": "get_service",
+          "schema_version": 1
+        },
+        "arguments": {
+          "service": {
+            "param": "service"
+          }
+        },
+        "expect": {
+          "from_step": "after",
+          "path": "/state",
+          "op": "eq",
+          "value": "active"
+        },
+        "attempts": 3,
+        "interval_s": 5
+      }
+    ]
+  }
+}

@@ -1,0 +1,115 @@
+[
+  {
+    "id": "login",
+    "title": "Sign in",
+    "description": "Access your private server inventory on this installation.",
+    "kind": "form",
+    "columns": [],
+    "rows": [],
+    "notes": [
+      "Hosted and self-hosted use the same identity flow; this is a simulated form, not a provider choice.",
+      "Expired session clears cached account/target state; sign-out returns here. Unauthorized is not an empty inventory.",
+      "Labels, associated validation errors and keyboard focus precede submission."
+    ]
+  },
+  {
+    "id": "inventory",
+    "title": "Your servers",
+    "description": "Private inventory · changes apply without redeploying.",
+    "columns": [
+      "Server / SSH identity",
+      "Environment",
+      "Trust / connection",
+      "Revision"
+    ],
+    "rows": [
+      [
+        "prod-web-01 · app@192.0.2.10:22",
+        "Production",
+        "Verified · connected",
+        "7"
+      ],
+      [
+        "staging-api-02 · app@192.0.2.20:22",
+        "Staging",
+        "Observed key · UNVERIFIED",
+        "2"
+      ],
+      [
+        "dev-db-03 · app@192.0.2.30:22",
+        "Development",
+        "Disconnected · cached",
+        "4"
+      ]
+    ],
+    "notes": [
+      "Only owned inventory from the management API is eligible; guessing another user's ID cannot grant access.",
+      "Add/edit via server-form, verification via host-trust; deletion requires exact target/revision review and invalidates sessions/caches.",
+      "Empty: Add your first server. Loading: skeleton. Unauthorized: sign in. Disconnect retains inventory but disables live operations.",
+      "Revision conflict: reload/compare; never overwrite stale revision automatically. Search and internal scroll preserve mobile access."
+    ]
+  },
+  {
+    "id": "server-form",
+    "title": "Add or edit server",
+    "description": "Provide connection metadata and a new write-only credential.",
+    "kind": "form",
+    "columns": [],
+    "rows": [],
+    "notes": [
+      "Production fields: name, hostname, port (1–65535), SSH username, environment, key provisioning or credential replacement; edit binds server revision.",
+      "New secret value is never echoed or populated from saved storage. Clear after successful provisioning and on account change; exclude from logs, analytics and hydration.",
+      "Deletion confirmation repeats target and revision; failure-before-submit leaves inventory unchanged. Conflict offers compare/reload. Rotation invalidates relevant connection state.",
+      "Mobile fields stack with error association; submit focuses first invalid input."
+    ]
+  },
+  {
+    "id": "host-trust",
+    "title": "Verify host identity",
+    "description": "An observed host key has not yet been independently verified.",
+    "columns": [
+      "Target",
+      "Observed key",
+      "Enrollment state"
+    ],
+    "rows": [
+      [
+        "staging-api-02 · r2",
+        "SHA256:SYNTHETIC_EXAMPLE",
+        "Unverified · remote actions blocked"
+      ]
+    ],
+    "notes": [
+      "Show algorithm/fingerprint/source and observation time. Independently compare using a trusted channel, then record explicit verification.",
+      "Changed key blocks connection and requires renewed verification; never offer accept-all or label first observation trusted.",
+      "Unavailable observation differs from mismatch. Unauthorized users cannot enroll another owner's server."
+    ]
+  },
+  {
+    "id": "agent-setup",
+    "title": "Agent connection",
+    "description": "One installation endpoint; authorization scopes access to your owned servers.",
+    "columns": [
+      "Agent grant",
+      "Owned scope",
+      "Expires / status"
+    ],
+    "rows": [
+      [
+        "Demo agent A",
+        "prod-web-01 · read-only",
+        "2026-10-12 08:00 UTC · active"
+      ],
+      [
+        "Demo agent B",
+        "staging-api-02",
+        "Revoked · cannot connect"
+      ]
+    ],
+    "notes": [
+      "Copy public endpoint, follow separate authorization, inspect granted scopes and expiry, revoke owned grant. No URL token/SSH secrets.",
+      "Revocation/expiry disables subsequent calls; URL possession never grants access. Unknown client compatibility remains an identity-owner decision.",
+      "Disconnected agent status is distinct from dashboard session expiry. Self-hosted install uses its own domain/database/identity boundary."
+    ]
+  }
+]

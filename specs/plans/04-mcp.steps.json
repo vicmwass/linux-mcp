@@ -1,0 +1,95 @@
+{
+  "plan_id": "04-mcp",
+  "version": 1,
+  "steps": [
+    {
+      "id": "04-01",
+      "title": "Verify transport and freeze adapter mapping",
+      "depends_on": [
+        "00-contracts/00-12"
+      ],
+      "resources": [
+        "mcp-design"
+      ]
+    },
+    {
+      "id": "04-02",
+      "title": "Bootstrap mock-backed HTTP endpoint",
+      "depends_on": [
+        "04-01"
+      ],
+      "resources": [
+        "workspace-manifests",
+        "mcp-bootstrap",
+        "shared-routing"
+      ]
+    },
+    {
+      "id": "04-03",
+      "title": "Implement per-request identity and session binding",
+      "depends_on": [
+        "04-02"
+      ],
+      "resources": [
+        "mcp-auth-session"
+      ]
+    },
+    {
+      "id": "04-04",
+      "title": "Implement inventory and inspection tools",
+      "depends_on": [
+        "04-02"
+      ],
+      "resources": [
+        "mcp-inspection-tools"
+      ]
+    },
+    {
+      "id": "04-05",
+      "title": "Implement mutation, approval and audit tools",
+      "depends_on": [
+        "04-02"
+      ],
+      "resources": [
+        "mcp-mutation-tools"
+      ]
+    },
+    {
+      "id": "04-06",
+      "title": "Compose real adapters and resource limits",
+      "depends_on": [
+        "04-03",
+        "04-04",
+        "04-05",
+        "01-inventory/01-08",
+        "02-identity/02-08",
+        "03-execution/03-08",
+        "06-governance/06-07"
+      ],
+      "resources": [
+        "mcp-composition",
+        "shared-routing"
+      ]
+    },
+    {
+      "id": "04-07",
+      "title": "Validate real MCP client interoperability",
+      "depends_on": [
+        "04-06"
+      ],
+      "resources": [
+        "mcp-client-tests"
+      ]
+    },
+    {
+      "id": "04-08",
+      "title": "Publish service handoff and compatibility baseline",
+      "depends_on": [
+        "04-07"
+      ],
+      "resources": [
+        "mcp-release"
+      ]
+    }
+  ]
+}

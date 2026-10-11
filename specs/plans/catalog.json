@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "plans": [
+    "00-contracts.steps.json",
+    "01-inventory.steps.json",
+    "02-identity.steps.json",
+    "03-execution.steps.json",
+    "04-mcp.steps.json",
+    "05-dashboard.steps.json",
+    "06-governance.steps.json",
+    "07-deployment.steps.json",
+    "08-console.steps.json",
+    "09-administration.steps.json",
+    "10-monitoring.steps.json",
+    "11-workflows.steps.json",
+    "12-client-design.steps.json",
+    "12-client-design-r02.steps.json"
+  ]
+}

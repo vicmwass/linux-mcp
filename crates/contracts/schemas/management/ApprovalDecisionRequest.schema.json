@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ApprovalDecisionRequest",
+  "description": "`POST /api/v1/approvals/{approval_id}/decision` — browser session + CSRF only.\n\n`intent_digest` must equal the digest of the stored intent the human was shown, so a\ndecision cannot apply to a different intent than the one displayed.",
+  "type": "object",
+  "properties": {
+    "decision": {
+      "$ref": "#/$defs/ApprovalDecision"
+    },
+    "intent_digest": {
+      "$ref": "#/$defs/IntentDigest"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "decision",
+    "intent_digest"
+  ],
+  "$defs": {
+    "ApprovalDecision": {
+      "type": "string",
+      "enum": [
+        "approve",
+        "reject"
+      ]
+    },
+    "IntentDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

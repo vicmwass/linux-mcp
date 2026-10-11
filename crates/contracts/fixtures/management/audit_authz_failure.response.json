@@ -1,0 +1,16 @@
+{
+  "id": "a0000000-0000-4000-8000-000000000002",
+  "request_id": "0b1c2d3e-4f50-4617-8899-aabbccddeeff",
+  "action": "authorization_failed",
+  "operation_id": null,
+  "server_id": null,
+  "server_revision": null,
+  "tool": null,
+  "redacted_arguments": null,
+  "approval_id": null,
+  "submission": null,
+  "outcome": null,
+  "refusal_reason": null,
+  "exit_code": null,
+  "recorded_at": "2026-10-11T08:06:00.000Z"
+}

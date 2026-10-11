@@ -1,0 +1,211 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "tools": [
+      {
+        "name": "create_user",
+        "description": "Create a Linux user account on a configured server.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "properties": {
+            "home": {
+              "description": "Optional home directory.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "server_id": {
+              "description": "ID of the configured Linux server.",
+              "type": "string"
+            },
+            "shell": {
+              "description": "Optional login shell, e.g. /bin/bash.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "username": {
+              "description": "Username to retrieve.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "server_id",
+            "username"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "name": "delete_user",
+        "description": "Permanently delete a Linux user account. Requires explicit confirmation.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "properties": {
+            "confirm": {
+              "description": "Must be true to permanently delete the account.",
+              "type": "boolean"
+            },
+            "remove_home": {
+              "description": "Also remove the user's home directory.",
+              "type": "boolean"
+            },
+            "server_id": {
+              "description": "ID of the configured Linux server.",
+              "type": "string"
+            },
+            "username": {
+              "description": "Username to delete.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "server_id",
+            "username",
+            "confirm",
+            "remove_home"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "name": "disable_user",
+        "description": "Disable a Linux user account without deleting it.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "properties": {
+            "server_id": {
+              "description": "ID of the configured Linux server.",
+              "type": "string"
+            },
+            "username": {
+              "description": "Username to retrieve.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "server_id",
+            "username"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "name": "enable_user",
+        "description": "Enable a previously disabled Linux user account.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "properties": {
+            "server_id": {
+              "description": "ID of the configured Linux server.",
+              "type": "string"
+            },
+            "username": {
+              "description": "Username to enable.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "server_id",
+            "username"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "name": "execute_command",
+        "description": "Execute a Linux command on a configured server after capability, operation, and security-policy validation.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "properties": {
+            "command": {
+              "description": "Linux command to execute.",
+              "type": "string"
+            },
+            "confirm": {
+              "default": false,
+              "description": "Explicit confirmation for high-risk operations.",
+              "type": "boolean"
+            },
+            "server_id": {
+              "description": "ID of the configured Linux server.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "server_id",
+            "command"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "name": "get_server_capabilities",
+        "description": "Detect the operating system, distribution, package manager, init system, architecture, and available Linux commands on a server.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "properties": {
+            "server_id": {
+              "description": "ID of the configured Linux server.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "server_id"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "name": "get_user",
+        "description": "Get detailed information about a user on a Linux server.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "properties": {
+            "server_id": {
+              "description": "ID of the configured Linux server.",
+              "type": "string"
+            },
+            "username": {
+              "description": "Username to retrieve.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "server_id",
+            "username"
+          ],
+          "type": "object"
+        }
+      },
+      {
+        "name": "list_servers",
+        "description": "List all Linux servers configured in the MCP server.",
+        "inputSchema": {
+          "properties": {},
+          "type": "object"
+        }
+      },
+      {
+        "name": "list_users",
+        "description": "List users configured on a Linux server.",
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "properties": {
+            "server_id": {
+              "description": "ID of the configured Linux server.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "server_id"
+          ],
+          "type": "object"
+        }
+      }
+    ]
+  }
+}

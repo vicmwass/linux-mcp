@@ -1,0 +1,62 @@
+{
+  "schema_version": "linux-mcp/fleet-comparison/v1",
+  "comparison_id": "c1000000-0000-4000-8000-000000000001",
+  "template": {
+    "id": "disk-usage-fleet",
+    "version": 1
+  },
+  "requested_at": "2026-10-11T09:00:00.000Z",
+  "completed_at": "2026-10-11T09:00:05.000Z",
+  "max_age_s": 300,
+  "complete": false,
+  "partial_reason": "target_failed",
+  "requested_count": 3,
+  "included_count": 1,
+  "columns": [
+    {
+      "field": "/used_percent",
+      "label": "Used",
+      "unit": "percent"
+    }
+  ],
+  "rows": [
+    {
+      "server_id": "5e000000-0000-4000-8000-00000000a001",
+      "server_revision": 2,
+      "status": "collected",
+      "collected_at": "2026-10-11T09:00:00.000Z",
+      "age_s": 1,
+      "values": {
+        "/used_percent": 41.5
+      },
+      "error_code": null
+    },
+    {
+      "server_id": "5e000000-0000-4000-8000-00000000a002",
+      "server_revision": 2,
+      "status": "failed",
+      "collected_at": null,
+      "age_s": null,
+      "values": null,
+      "error_code": "timeout"
+    },
+    {
+      "server_id": "5e000000-0000-4000-8000-00000000a003",
+      "server_revision": 2,
+      "status": "unsupported",
+      "collected_at": null,
+      "age_s": null,
+      "values": null,
+      "error_code": "validation"
+    }
+  ],
+  "aggregates": [
+    {
+      "field": "/used_percent",
+      "kind": "max",
+      "value": 41.5,
+      "included_count": 1,
+      "requested_count": 3
+    }
+  ]
+}

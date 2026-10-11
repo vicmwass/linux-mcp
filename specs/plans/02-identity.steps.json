@@ -1,0 +1,92 @@
+{
+  "plan_id": "02-identity",
+  "version": 1,
+  "steps": [
+    {
+      "id": "02-01",
+      "title": "Select provider and authorization flows",
+      "depends_on": [
+        "00-contracts/00-12"
+      ],
+      "resources": [
+        "identity-design"
+      ]
+    },
+    {
+      "id": "02-02",
+      "title": "Bootstrap identity storage and test issuer",
+      "depends_on": [
+        "02-01"
+      ],
+      "resources": [
+        "workspace-manifests",
+        "migration-registry",
+        "identity-bootstrap"
+      ]
+    },
+    {
+      "id": "02-03",
+      "title": "Implement browser sessions and account mapping",
+      "depends_on": [
+        "02-02"
+      ],
+      "resources": [
+        "identity-browser"
+      ]
+    },
+    {
+      "id": "02-04",
+      "title": "Implement MCP token verification and discovery",
+      "depends_on": [
+        "02-02"
+      ],
+      "resources": [
+        "identity-mcp"
+      ]
+    },
+    {
+      "id": "02-05",
+      "title": "Implement delegated dashboard authority",
+      "depends_on": [
+        "02-03",
+        "02-04"
+      ],
+      "resources": [
+        "identity-delegation"
+      ]
+    },
+    {
+      "id": "02-06",
+      "title": "Implement revocation and bootstrap policy",
+      "depends_on": [
+        "02-03",
+        "02-04"
+      ],
+      "resources": [
+        "identity-lifecycle"
+      ]
+    },
+    {
+      "id": "02-07",
+      "title": "Compose adapters and auth middleware",
+      "depends_on": [
+        "02-05",
+        "02-06"
+      ],
+      "resources": [
+        "identity-exports",
+        "shared-routing"
+      ]
+    },
+    {
+      "id": "02-08",
+      "title": "Validate two installations and publish handoff",
+      "depends_on": [
+        "02-07"
+      ],
+      "resources": [
+        "identity-integration"
+      ]
+    }
+  ]
+}

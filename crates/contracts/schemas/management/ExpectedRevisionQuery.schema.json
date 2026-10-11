@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExpectedRevisionQuery",
+  "description": "Query for `DELETE` routes guarded by a revision: `?expected_revision=N`.",
+  "type": "object",
+  "properties": {
+    "expected_revision": {
+      "$ref": "#/$defs/ServerRevision"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "expected_revision"
+  ],
+  "$defs": {
+    "ServerRevision": {
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": 1
+    }
+  }
+}

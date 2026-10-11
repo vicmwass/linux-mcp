@@ -1,0 +1,266 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuditRecord",
+  "description": "One owner-scoped audit record.\n\nFor authorization failures against resources the caller does not own, `server_id`,\n`server_revision` and `tool` are omitted so foreign metadata never appears.",
+  "type": "object",
+  "properties": {
+    "action": {
+      "$ref": "#/$defs/AuditAction"
+    },
+    "approval_id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ApprovalId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "exit_code": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "uint32",
+      "minimum": 0
+    },
+    "id": {
+      "$ref": "#/$defs/AuditRecordId"
+    },
+    "operation_id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OperationId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "outcome": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AuditOutcomeStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "recorded_at": {
+      "$ref": "#/$defs/Timestamp"
+    },
+    "redacted_arguments": {
+      "description": "Arguments with sensitive values replaced by `\"<redacted>\"`."
+    },
+    "refusal_reason": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RefusalReason"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "request_id": {
+      "$ref": "#/$defs/RequestId"
+    },
+    "server_id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ServerId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "server_revision": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ServerRevision"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "submission": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SubmissionState"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tool": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ToolId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "request_id",
+    "action",
+    "recorded_at"
+  ],
+  "$defs": {
+    "ApprovalId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "AuditAction": {
+      "type": "string",
+      "enum": [
+        "server_created",
+        "server_updated",
+        "server_deleted",
+        "credential_written",
+        "credential_removed",
+        "host_key_observed",
+        "host_key_enrolled",
+        "host_key_revoked",
+        "approval_requested",
+        "approval_decided",
+        "approval_consumed",
+        "operation_refused",
+        "operation_submission_pending",
+        "operation_submitted",
+        "operation_completed",
+        "operation_outcome_unknown",
+        "authorization_failed"
+      ]
+    },
+    "AuditOutcomeStatus": {
+      "description": "Outcome status recorded in audit (output is not stored by default).",
+      "type": "string",
+      "enum": [
+        "succeeded",
+        "refused",
+        "failed_before_submission",
+        "unknown_after_submission"
+      ]
+    },
+    "AuditRecordId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "OperationId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "RefusalReason": {
+      "description": "Why an operation was refused. A refusal is a normal result, not a transport error.",
+      "oneOf": [
+        {
+          "description": "Security policy denied the operation; approval cannot override this.",
+          "type": "string",
+          "const": "policy_denied"
+        },
+        {
+          "description": "The command/tool could not be classified or uses unsupported constructs.",
+          "type": "string",
+          "const": "unsupported_operation"
+        },
+        {
+          "description": "The target lacks a required capability (e.g. no package manager detected).",
+          "type": "string",
+          "const": "capability_missing"
+        },
+        {
+          "description": "Human approval is required and no valid consumed approval was presented.",
+          "type": "string",
+          "const": "approval_required"
+        },
+        {
+          "description": "The presented approval is expired, consumed, rejected or bound to different inputs.",
+          "type": "string",
+          "const": "approval_invalid"
+        },
+        {
+          "description": "Legacy stdio only: the tool's own `confirm` flag was required but not set.",
+          "type": "string",
+          "const": "confirmation_required"
+        },
+        {
+          "description": "Target disabled, host key unverified, or credentials missing.",
+          "type": "string",
+          "const": "target_unavailable"
+        },
+        {
+          "description": "The server revision changed after the intent was created.",
+          "type": "string",
+          "const": "revision_changed"
+        },
+        {
+          "description": "Tool-level argument validation failed (e.g. invalid username).",
+          "type": "string",
+          "const": "invalid_arguments"
+        }
+      ]
+    },
+    "RequestId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ServerId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ServerRevision": {
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": 1
+    },
+    "SubmissionState": {
+      "description": "Where an operation is relative to the submission boundary.",
+      "oneOf": [
+        {
+          "description": "Nothing was sent to the remote host.",
+          "type": "string",
+          "const": "not_submitted"
+        },
+        {
+          "description": "A durable pending record exists; the exec request may or may not have been sent.",
+          "type": "string",
+          "const": "submission_pending"
+        },
+        {
+          "description": "The exec request was sent to the remote host.",
+          "type": "string",
+          "const": "submitted"
+        },
+        {
+          "description": "The remote command completed and reported a status.",
+          "type": "string",
+          "const": "completed"
+        }
+      ]
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "ToolId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{0,63}$"
+    }
+  }
+}

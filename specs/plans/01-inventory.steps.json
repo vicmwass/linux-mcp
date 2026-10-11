@@ -1,0 +1,93 @@
+{
+  "plan_id": "01-inventory",
+  "version": 1,
+  "steps": [
+    {
+      "id": "01-01",
+      "title": "Map storage and credential boundaries",
+      "depends_on": [
+        "00-contracts/00-12"
+      ],
+      "resources": [
+        "inventory-design"
+      ]
+    },
+    {
+      "id": "01-02",
+      "title": "Bootstrap crate and migration ownership",
+      "depends_on": [
+        "01-01"
+      ],
+      "resources": [
+        "workspace-manifests",
+        "migration-registry",
+        "inventory-bootstrap"
+      ]
+    },
+    {
+      "id": "01-03",
+      "title": "Implement owner-scoped inventory repository",
+      "depends_on": [
+        "01-02"
+      ],
+      "resources": [
+        "inventory-repository"
+      ]
+    },
+    {
+      "id": "01-04",
+      "title": "Implement encrypted credential store",
+      "depends_on": [
+        "01-02"
+      ],
+      "resources": [
+        "inventory-credentials"
+      ]
+    },
+    {
+      "id": "01-05",
+      "title": "Implement host trust and destination policy",
+      "depends_on": [
+        "01-02"
+      ],
+      "resources": [
+        "inventory-trust-policy"
+      ]
+    },
+    {
+      "id": "01-06",
+      "title": "Compose authorized resolution and lifecycle events",
+      "depends_on": [
+        "01-03",
+        "01-04",
+        "01-05"
+      ],
+      "resources": [
+        "inventory-resolver",
+        "inventory-exports"
+      ]
+    },
+    {
+      "id": "01-07",
+      "title": "Expose management handlers and mock demo",
+      "depends_on": [
+        "01-06"
+      ],
+      "resources": [
+        "inventory-http",
+        "shared-routing"
+      ]
+    },
+    {
+      "id": "01-08",
+      "title": "Validate real identity and publish handoff",
+      "depends_on": [
+        "01-07",
+        "02-identity/02-08"
+      ],
+      "resources": [
+        "inventory-integration"
+      ]
+    }
+  ]
+}

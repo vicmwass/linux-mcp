@@ -1,0 +1,680 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ToolResultEnvelope",
+  "description": "Structured result of a v1 tool call, returned as MCP `structuredContent` alongside a short\ntext rendering. `isError` is `true` only for the `error` kind and for `refused`,\n`failed_before_submission` and `unknown_after_submission` outcomes.",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "$ref": "#/$defs/RequestId"
+    },
+    "result": {
+      "$ref": "#/$defs/ToolResultBody"
+    },
+    "schema_version": {
+      "$ref": "#/$defs/ExtensionVersionV1"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_id",
+    "result"
+  ],
+  "$defs": {
+    "ApprovalErrorReason": {
+      "description": "Approval states visible to callers in an `approval_required` error.",
+      "oneOf": [
+        {
+          "description": "No approval exists for this exact intent.",
+          "type": "string",
+          "const": "missing"
+        },
+        {
+          "description": "An approval exists but is still waiting for a human decision.",
+          "type": "string",
+          "const": "pending"
+        },
+        {
+          "description": "The approval expired.",
+          "type": "string",
+          "const": "expired"
+        },
+        {
+          "description": "The approval was already consumed by a previous dispatch.",
+          "type": "string",
+          "const": "consumed"
+        },
+        {
+          "description": "The approval was rejected by the human approver.",
+          "type": "string",
+          "const": "rejected"
+        },
+        {
+          "description": "Arguments, target revision, identity or schema version no longer match the binding.",
+          "type": "string",
+          "const": "binding_mismatch"
+        }
+      ]
+    },
+    "ApprovalId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ApprovalStatus": {
+      "description": "Human approval state.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "pending",
+            "approved",
+            "rejected",
+            "expired"
+          ]
+        },
+        {
+          "description": "Consumed by exactly one dispatch; never reset, even if the outcome is unknown.",
+          "type": "string",
+          "const": "consumed"
+        },
+        {
+          "description": "Target revision, identity or permissions changed after approval.",
+          "type": "string",
+          "const": "invalidated"
+        }
+      ]
+    },
+    "BoundedOutput": {
+      "description": "Output stream bounded to a byte limit, truncated on a UTF-8 boundary.",
+      "type": "object",
+      "properties": {
+        "lossy": {
+          "description": "Invalid UTF-8 sequences were replaced with U+FFFD.",
+          "type": "boolean"
+        },
+        "original_bytes": {
+          "description": "Byte length of the original stream before truncation.",
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0
+        },
+        "text": {
+          "type": "string"
+        },
+        "truncated": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "truncated",
+        "original_bytes",
+        "lossy"
+      ]
+    },
+    "ErrorCode": {
+      "description": "Closed set of public error codes (snake_case on the wire).",
+      "type": "string",
+      "enum": [
+        "unauthenticated",
+        "forbidden",
+        "not_found",
+        "validation",
+        "revision_conflict",
+        "approval_required",
+        "unavailable",
+        "timeout",
+        "outcome_unknown"
+      ]
+    },
+    "ErrorDetails": {
+      "description": "Closed set of structured error details.",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "field_violations"
+            },
+            "violations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/FieldViolation"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "violations"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "current_revision": {
+              "$ref": "#/$defs/ServerRevision"
+            },
+            "kind": {
+              "type": "string",
+              "const": "revision_conflict"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "current_revision"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "approval_id": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/ApprovalId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "kind": {
+              "type": "string",
+              "const": "approval_required"
+            },
+            "reason": {
+              "$ref": "#/$defs/ApprovalErrorReason"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "reason"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "retry_after"
+            },
+            "retry_after_ms": {
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "retry_after_ms"
+          ]
+        }
+      ]
+    },
+    "ExitStatus": {
+      "description": "Remote exit status, independent of transport/policy status.",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 0
+            },
+            "kind": {
+              "type": "string",
+              "const": "code"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "code"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "signal"
+            },
+            "signal": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "signal"
+          ]
+        }
+      ]
+    },
+    "ExtensionVersionV1": {
+      "type": "string",
+      "const": "linux-mcp/v1"
+    },
+    "FieldPath": {
+      "type": "string",
+      "pattern": "^[a-z0-9_.\\[\\]]{1,128}$"
+    },
+    "FieldViolation": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "$ref": "#/$defs/FieldPath"
+        },
+        "rule": {
+          "$ref": "#/$defs/ViolationRule"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "field",
+        "rule"
+      ]
+    },
+    "IntentDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "OperationId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "OperationOutcome": {
+      "description": "Spec 00 `OperationOutcome`.",
+      "oneOf": [
+        {
+          "description": "The remote command ran to completion. A non-zero exit status is still `succeeded`\nat this level; inspect `exit_status`.",
+          "type": "object",
+          "properties": {
+            "exit_status": {
+              "$ref": "#/$defs/ExitStatus"
+            },
+            "status": {
+              "type": "string",
+              "const": "succeeded"
+            },
+            "stderr": {
+              "$ref": "#/$defs/BoundedOutput"
+            },
+            "stdout": {
+              "$ref": "#/$defs/BoundedOutput"
+            },
+            "verification": {
+              "$ref": "#/$defs/Verification"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "exit_status",
+            "stdout",
+            "stderr",
+            "verification"
+          ]
+        },
+        {
+          "description": "Not executed because policy, approval or validation refused it.",
+          "type": "object",
+          "properties": {
+            "detail": {
+              "description": "Short policy-generated explanation; never contains secrets or foreign metadata.",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reason": {
+              "$ref": "#/$defs/RefusalReason"
+            },
+            "status": {
+              "type": "string",
+              "const": "refused"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "reason"
+          ]
+        },
+        {
+          "description": "Nothing was submitted to the remote host.",
+          "type": "object",
+          "properties": {
+            "cause": {
+              "$ref": "#/$defs/PreSubmissionFailure"
+            },
+            "status": {
+              "type": "string",
+              "const": "failed_before_submission"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "cause"
+          ]
+        },
+        {
+          "description": "The command may have run; it will not be replayed automatically.",
+          "type": "object",
+          "properties": {
+            "cause": {
+              "$ref": "#/$defs/UnknownCause"
+            },
+            "partial_stderr": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/BoundedOutput"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "partial_stdout": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/BoundedOutput"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "status": {
+              "type": "string",
+              "const": "unknown_after_submission"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "cause"
+          ]
+        }
+      ]
+    },
+    "PreSubmissionFailure": {
+      "description": "Failure that happened before anything was sent to the remote host.",
+      "type": "string",
+      "enum": [
+        "timeout",
+        "cancelled",
+        "connection_failed",
+        "host_key_rejected",
+        "authentication_failed",
+        "credential_unavailable",
+        "audit_unavailable",
+        "unavailable"
+      ]
+    },
+    "PublicError": {
+      "description": "Public error envelope used by the management API and MCP structured results.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/ErrorCode"
+        },
+        "details": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ErrorDetails"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "request_id": {
+          "$ref": "#/$defs/RequestId"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "message",
+        "request_id"
+      ]
+    },
+    "RefusalReason": {
+      "description": "Why an operation was refused. A refusal is a normal result, not a transport error.",
+      "oneOf": [
+        {
+          "description": "Security policy denied the operation; approval cannot override this.",
+          "type": "string",
+          "const": "policy_denied"
+        },
+        {
+          "description": "The command/tool could not be classified or uses unsupported constructs.",
+          "type": "string",
+          "const": "unsupported_operation"
+        },
+        {
+          "description": "The target lacks a required capability (e.g. no package manager detected).",
+          "type": "string",
+          "const": "capability_missing"
+        },
+        {
+          "description": "Human approval is required and no valid consumed approval was presented.",
+          "type": "string",
+          "const": "approval_required"
+        },
+        {
+          "description": "The presented approval is expired, consumed, rejected or bound to different inputs.",
+          "type": "string",
+          "const": "approval_invalid"
+        },
+        {
+          "description": "Legacy stdio only: the tool's own `confirm` flag was required but not set.",
+          "type": "string",
+          "const": "confirmation_required"
+        },
+        {
+          "description": "Target disabled, host key unverified, or credentials missing.",
+          "type": "string",
+          "const": "target_unavailable"
+        },
+        {
+          "description": "The server revision changed after the intent was created.",
+          "type": "string",
+          "const": "revision_changed"
+        },
+        {
+          "description": "Tool-level argument validation failed (e.g. invalid username).",
+          "type": "string",
+          "const": "invalid_arguments"
+        }
+      ]
+    },
+    "RequestId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ServerId": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "ServerRevision": {
+      "type": "integer",
+      "maximum": 9007199254740991,
+      "minimum": 1
+    },
+    "SubmissionState": {
+      "description": "Where an operation is relative to the submission boundary.",
+      "oneOf": [
+        {
+          "description": "Nothing was sent to the remote host.",
+          "type": "string",
+          "const": "not_submitted"
+        },
+        {
+          "description": "A durable pending record exists; the exec request may or may not have been sent.",
+          "type": "string",
+          "const": "submission_pending"
+        },
+        {
+          "description": "The exec request was sent to the remote host.",
+          "type": "string",
+          "const": "submitted"
+        },
+        {
+          "description": "The remote command completed and reported a status.",
+          "type": "string",
+          "const": "completed"
+        }
+      ]
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "ToolResultBody": {
+      "oneOf": [
+        {
+          "description": "A completed or refused operation. `submission` shows where it stopped.",
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "outcome"
+            },
+            "operation_id": {
+              "$ref": "#/$defs/OperationId"
+            },
+            "outcome": {
+              "$ref": "#/$defs/OperationOutcome"
+            },
+            "server_id": {
+              "$ref": "#/$defs/ServerId"
+            },
+            "submission": {
+              "$ref": "#/$defs/SubmissionState"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "operation_id",
+            "server_id",
+            "submission",
+            "outcome"
+          ]
+        },
+        {
+          "description": "Returned instead of executing when human approval is required.",
+          "type": "object",
+          "properties": {
+            "approval_id": {
+              "$ref": "#/$defs/ApprovalId"
+            },
+            "dashboard_path": {
+              "description": "Dashboard-relative path the owner opens to decide, e.g. `/approvals/<id>`. Never carries\ncredentials or tokens.",
+              "type": "string"
+            },
+            "expires_at": {
+              "$ref": "#/$defs/Timestamp"
+            },
+            "intent_digest": {
+              "$ref": "#/$defs/IntentDigest"
+            },
+            "kind": {
+              "type": "string",
+              "const": "approval_required"
+            },
+            "status": {
+              "$ref": "#/$defs/ApprovalStatus"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "approval_id",
+            "status",
+            "intent_digest",
+            "expires_at",
+            "dashboard_path"
+          ]
+        },
+        {
+          "description": "Sanitized error (authentication, validation, not found, unavailable...).",
+          "type": "object",
+          "properties": {
+            "error": {
+              "$ref": "#/$defs/PublicError"
+            },
+            "kind": {
+              "type": "string",
+              "const": "error"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "error"
+          ]
+        }
+      ]
+    },
+    "UnknownCause": {
+      "description": "Why the outcome of a submitted operation is unknown.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "timeout",
+            "disconnected",
+            "cancelled"
+          ]
+        },
+        {
+          "description": "Recovery found a pending dispatch without a recorded result.",
+          "type": "string",
+          "const": "unreconciled"
+        }
+      ]
+    },
+    "Verification": {
+      "description": "Post-change verification, reported separately from the exit status.",
+      "type": "string",
+      "enum": [
+        "not_attempted",
+        "verified",
+        "mismatch",
+        "unknown"
+      ]
+    },
+    "ViolationRule": {
+      "description": "Validation rule that a value violated. Values themselves are never echoed back.",
+      "type": "string",
+      "enum": [
+        "required",
+        "too_short",
+        "too_long",
+        "invalid_format",
+        "out_of_range",
+        "unknown_field",
+        "not_allowed",
+        "no_changes"
+      ]
+    }
+  }
+}

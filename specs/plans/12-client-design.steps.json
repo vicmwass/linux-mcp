@@ -1,0 +1,16 @@
+{
+  "plan_id": "12-client-design",
+  "version": 1,
+  "steps": [
+    {"id":"12-01","title":"Establish design brief and coverage map","depends_on":[],"resources":["client-design-brief"]},
+    {"id":"12-02","title":"Define navigation and page wireframes","depends_on":["12-01"],"resources":["client-design-navigation"]},
+    {"id":"12-03","title":"Define tokens, components and preview scaffold","depends_on":["12-02"],"resources":["client-design-system"]},
+    {"id":"12-04","title":"Design account, inventory and agent setup screens","depends_on":["12-03"],"resources":["client-design-inventory-pages"]},
+    {"id":"12-05","title":"Design console, approval and operation screens","depends_on":["12-03"],"resources":["client-design-console-pages"]},
+    {"id":"12-06","title":"Design administration screen families","depends_on":["12-03"],"resources":["client-design-administration-pages"]},
+    {"id":"12-07","title":"Design monitoring and workflow screens","depends_on":["12-03"],"resources":["client-design-monitoring-workflow-pages"]},
+    {"id":"12-08","title":"Assemble responsive preview and visual QA","depends_on":["12-04","12-05","12-06","12-07"],"resources":["client-design-system","client-design-preview","client-design-review"]},
+    {"id":"12-09","title":"Prepare Rust component and page handoff","depends_on":["12-08"],"resources":["client-design-handoff"]},
+    {"id":"12-10","title":"Publish versioned design baseline and handoff","depends_on":["12-09"],"resources":["client-design-handoff","client-design-release"]}
+  ]
+}

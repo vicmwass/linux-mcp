@@ -1,0 +1,12 @@
+{
+  "schema_version": "linux-mcp/v1",
+  "request_id": "0b1c2d3e-4f50-4617-8899-aabbccddeeff",
+  "result": {
+    "kind": "approval_required",
+    "approval_id": "a9900000-0000-4000-8000-000000000001",
+    "status": "pending",
+    "intent_digest": "sha256:f94a1cf2ebd80321458ee496c9a8826739c946529440ca53193a9a190003ab24",
+    "expires_at": "2026-10-11T08:15:00.000Z",
+    "dashboard_path": "/approvals/a9900000-0000-4000-8000-000000000001"
+  }
+}

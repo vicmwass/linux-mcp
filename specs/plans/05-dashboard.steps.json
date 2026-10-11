@@ -1,0 +1,105 @@
+{
+  "plan_id": "05-dashboard",
+  "version": 2,
+  "steps": [
+    {
+      "id": "05-01",
+      "title": "Define page and adapter architecture",
+      "depends_on": [
+        "00-contracts/00-12"
+      ],
+      "resources": [
+        "dashboard-design"
+      ]
+    },
+    {
+      "id": "05-02",
+      "title": "Bootstrap server, browser build and page shell",
+      "depends_on": [
+        "05-01",
+        "12-client-design/12-10"
+      ],
+      "resources": [
+        "workspace-manifests",
+        "dashboard-shell",
+        "shared-routing"
+      ]
+    },
+    {
+      "id": "05-03",
+      "title": "Implement login and backend authority adapter",
+      "depends_on": [
+        "05-02"
+      ],
+      "resources": [
+        "dashboard-auth"
+      ]
+    },
+    {
+      "id": "05-04",
+      "title": "Implement inventory and credential/trust forms",
+      "depends_on": [
+        "05-02"
+      ],
+      "resources": [
+        "dashboard-inventory"
+      ]
+    },
+    {
+      "id": "05-05",
+      "title": "Implement MCP client lifecycle and discovery",
+      "depends_on": [
+        "05-02"
+      ],
+      "resources": [
+        "dashboard-mcp-client"
+      ]
+    },
+    {
+      "id": "05-06",
+      "title": "Implement capabilities, users and operation results",
+      "depends_on": [
+        "05-05"
+      ],
+      "resources": [
+        "dashboard-server-pages"
+      ]
+    },
+    {
+      "id": "05-07",
+      "title": "Implement approval, audit and agent setup pages",
+      "depends_on": [
+        "05-05"
+      ],
+      "resources": [
+        "dashboard-governance"
+      ]
+    },
+    {
+      "id": "05-08",
+      "title": "Integrate fixture-backed UI and accessibility",
+      "depends_on": [
+        "05-03",
+        "05-04",
+        "05-06",
+        "05-07"
+      ],
+      "resources": [
+        "dashboard-shell",
+        "shared-routing",
+        "dashboard-ui-tests"
+      ]
+    },
+    {
+      "id": "05-09",
+      "title": "Integrate real services and publish handoff",
+      "depends_on": [
+        "05-08",
+        "04-mcp/04-08"
+      ],
+      "resources": [
+        "dashboard-integration"
+      ]
+    }
+  ]
+}

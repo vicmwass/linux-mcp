@@ -1,0 +1,108 @@
+{
+  "plan_id": "10-monitoring",
+  "version": 1,
+  "steps": [
+    {
+      "id": "10-01",
+      "title": "Freeze metrics, schedules and alert contracts",
+      "depends_on": [
+        "07-deployment/07-08"
+      ],
+      "resources": [
+        "contracts-registry",
+        "monitoring-design"
+      ]
+    },
+    {
+      "id": "10-02",
+      "title": "Bootstrap monitoring crate and persistence",
+      "depends_on": [
+        "10-01"
+      ],
+      "resources": [
+        "workspace-manifests",
+        "migration-registry",
+        "monitoring-bootstrap"
+      ]
+    },
+    {
+      "id": "10-03",
+      "title": "Implement structured metrics tools",
+      "depends_on": [
+        "10-01"
+      ],
+      "resources": [
+        "resource-metrics"
+      ]
+    },
+    {
+      "id": "10-04",
+      "title": "Implement scheduler, grants and replica leases",
+      "depends_on": [
+        "10-02"
+      ],
+      "resources": [
+        "monitoring-collector"
+      ]
+    },
+    {
+      "id": "10-05",
+      "title": "Implement history and retention API",
+      "depends_on": [
+        "10-02"
+      ],
+      "resources": [
+        "monitoring-history"
+      ]
+    },
+    {
+      "id": "10-06",
+      "title": "Implement alert evaluator and inbox",
+      "depends_on": [
+        "10-02"
+      ],
+      "resources": [
+        "monitoring-alerts"
+      ]
+    },
+    {
+      "id": "10-07",
+      "title": "Implement monitoring and alert pages",
+      "depends_on": [
+        "10-02"
+      ],
+      "resources": [
+        "dashboard-monitoring"
+      ]
+    },
+    {
+      "id": "10-08",
+      "title": "Compose and validate real collection",
+      "depends_on": [
+        "10-03",
+        "10-04",
+        "10-05",
+        "10-06",
+        "10-07",
+        "08-console/08-11"
+      ],
+      "resources": [
+        "shared-routing",
+        "resource-exports",
+        "dashboard-shell",
+        "monitoring-integration"
+      ]
+    },
+    {
+      "id": "10-09",
+      "title": "Publish monitoring release handoff",
+      "depends_on": [
+        "10-08"
+      ],
+      "resources": [
+        "monitoring-release",
+        "deploy-manifests"
+      ]
+    }
+  ]
+}

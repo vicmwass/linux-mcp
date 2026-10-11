@@ -1,0 +1,15 @@
+[package]
+name = "public-consumer-probe"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+# Standalone: must not join the repository workspace.
+[workspace]
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+[dependencies]
+linux-mcp-contracts = { path = "../../..", default-features = false, features = ["public"] }
+serde_json = "1"

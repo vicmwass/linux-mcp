@@ -1,0 +1,149 @@
+{
+  "checks": "24 contrast pairs and CSS semantic token consistency",
+  "results": [
+    {
+      "foreground": "text",
+      "background": "canvas",
+      "ratio": 16.05,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "text",
+      "background": "surface",
+      "ratio": 14.33,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "text",
+      "background": "raised",
+      "ratio": 12.4,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "muted",
+      "background": "canvas",
+      "ratio": 9.28,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "muted",
+      "background": "surface",
+      "ratio": 8.29,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "muted",
+      "background": "raised",
+      "ratio": 7.17,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "verified",
+      "background": "canvas",
+      "ratio": 13.33,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "verified",
+      "background": "surface",
+      "ratio": 11.91,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "verified",
+      "background": "raised",
+      "ratio": 10.3,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "refused",
+      "background": "canvas",
+      "ratio": 10.14,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "refused",
+      "background": "surface",
+      "ratio": 9.06,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "refused",
+      "background": "raised",
+      "ratio": 7.84,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "failed",
+      "background": "canvas",
+      "ratio": 9.9,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "failed",
+      "background": "surface",
+      "ratio": 8.84,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "failed",
+      "background": "raised",
+      "ratio": 7.65,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "unknown",
+      "background": "canvas",
+      "ratio": 12.98,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "unknown",
+      "background": "surface",
+      "ratio": 11.59,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "unknown",
+      "background": "raised",
+      "ratio": 10.03,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "accent",
+      "background": "canvas",
+      "ratio": 12.92,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "accent",
+      "background": "surface",
+      "ratio": 11.53,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "accent",
+      "background": "raised",
+      "ratio": 9.98,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "onAccent",
+      "background": "accent",
+      "ratio": 11.59,
+      "minimum": 4.5
+    },
+    {
+      "foreground": "border",
+      "background": "surface",
+      "ratio": 3.45,
+      "minimum": 3
+    },
+    {
+      "foreground": "focus",
+      "background": "surface",
+      "ratio": 11.53,
+      "minimum": 3
+    }
+  ]
+}

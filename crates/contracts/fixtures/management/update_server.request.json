@@ -1,0 +1,5 @@
+{
+  "expected_revision": 3,
+  "hostname": "build-02.example.internal",
+  "approval_mode": "high_and_above"
+}

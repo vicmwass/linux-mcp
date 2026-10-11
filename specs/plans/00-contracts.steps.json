@@ -1,0 +1,18 @@
+{
+  "plan_id": "00-contracts",
+  "version": 1,
+  "steps": [
+    {"id":"00-01","title":"Audit existing contracts and record design decisions","depends_on":[],"resources":["contracts-design","architecture-doc"]},
+    {"id":"00-02","title":"Create workspace and contracts crate skeleton","depends_on":["00-01"],"resources":["workspace-manifests","contracts-registry","architecture-doc"]},
+    {"id":"00-03","title":"Implement public identifiers, inventory DTOs and errors","depends_on":["00-02"],"resources":["contracts-public-models"]},
+    {"id":"00-04","title":"Implement trusted identity and secret boundaries","depends_on":["00-03"],"resources":["contracts-backend-models"]},
+    {"id":"00-05","title":"Define operations, approvals and outcome contracts","depends_on":["00-03"],"resources":["contracts-operation-models"]},
+    {"id":"00-06","title":"Define management API wire schemas","depends_on":["00-04","00-05"],"resources":["contracts-management-api"]},
+    {"id":"00-07","title":"Define async service interfaces","depends_on":["00-04","00-05"],"resources":["contracts-service-traits"]},
+    {"id":"00-08","title":"Define MCP compatibility fixtures","depends_on":["00-05"],"resources":["contracts-mcp-fixtures"]},
+    {"id":"00-09","title":"Implement in-memory adapters and scenario kit","depends_on":["00-06","00-07","00-08"],"resources":["contracts-mocks"]},
+    {"id":"00-10","title":"Integrate exports, features and schema compatibility","depends_on":["00-09"],"resources":["contracts-registry","workspace-manifests","contracts-schema-tests","architecture-doc"]},
+    {"id":"00-11","title":"Validate consumer probes and security boundaries","depends_on":["00-10"],"resources":["contracts-consumer-probes","architecture-doc"]},
+    {"id":"00-12","title":"Freeze v1 contracts and publish integration handoff","depends_on":["00-11"],"resources":["contracts-design","contracts-registry","architecture-doc"]}
+  ]
+}
